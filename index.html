@@ -38,7 +38,6 @@
         summary {
             list-style: none;
         }
-        /* Custom Notification Toast */
         #toast {
             visibility: hidden;
             min-width: 250px;
@@ -59,6 +58,12 @@
         }
         @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
         @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+        
+        .lang-active {
+            background-color: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            color: #4f46e5;
+        }
     </style>
 </head>
 <body class="text-slate-800">
@@ -70,11 +75,18 @@
                 <div class="bg-indigo-600 text-white p-2 rounded-lg shadow-md">
                     <i class="fas fa-network-wired"></i>
                 </div>
-                <span class="font-bold text-xl tracking-tight uppercase">Your IT Journey</span>
+                <span class="font-bold text-xl tracking-tight uppercase" id="nav-title">Your IT Journey</span>
             </div>
+            
             <div class="flex items-center gap-4">
+                <!-- Language Toggle -->
+                <div class="bg-slate-100 p-1 rounded-full flex gap-1 border border-slate-200">
+                    <button onclick="changeLanguage('en')" id="lang-en" class="text-[10px] font-bold px-3 py-1 rounded-full transition-all lang-active">EN</button>
+                    <button onclick="changeLanguage('de')" id="lang-de" class="text-[10px] font-bold px-3 py-1 rounded-full transition-all text-slate-500">DE</button>
+                </div>
+
                 <button onclick="requestUnlock()" class="bg-slate-800 text-white text-[10px] px-4 py-2 rounded-full hover:bg-slate-700 transition-all font-bold uppercase shadow-lg shadow-slate-200">
-                    <i class="fas fa-key mr-1"></i> Mentor Auth
+                    <i class="fas fa-key mr-1"></i> <span id="mentor-btn-text">Mentor Auth</span>
                 </button>
             </div>
         </div>
@@ -84,12 +96,12 @@
         <!-- Welcome Section -->
         <section class="mb-12">
             <div class="inline-block px-3 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full mb-4">
-                <i class="fas fa-check-circle mr-1"></i> CURRENT PROGRESS: HARDWARE READY
+                <i class="fas fa-check-circle mr-1"></i> <span id="progress-badge">CURRENT PROGRESS: HARDWARE READY</span>
             </div>
             <h1 class="text-4xl md:text-5xl font-extrabold mb-4">
-                Welcome, <span class="gradient-text">Luis!</span>
+                <span id="welcome-hello">Welcome,</span> <span class="gradient-text">Luis!</span>
             </h1>
-            <p class="text-lg text-slate-600 max-w-2xl leading-relaxed">
+            <p class="text-lg text-slate-600 max-w-2xl leading-relaxed" id="welcome-p">
                 Your journey into the world of IT continues. Explore each daily mission below to find the steps, guides, and interactive tools designed to help you build your skills and discover new interests.
             </p>
         </section>
@@ -100,7 +112,7 @@
             <div class="lg:col-span-2 space-y-2">
                 <h2 class="text-2xl font-bold mb-6 flex items-center gap-3 text-slate-700">
                     <i class="fas fa-tasks text-indigo-500"></i>
-                    Daily Tasks & Steps
+                    <span id="roadmap-h2">Daily Tasks & Steps</span>
                 </h2>
 
                 <div id="roadmap">
@@ -111,8 +123,8 @@
                             <i class="fas fa-check text-white text-[10px]"></i>
                         </div>
                         <div class="bg-white p-6 rounded-2xl border border-green-100 shadow-sm opacity-60">
-                            <h4 class="font-bold text-lg text-green-800 mb-2">Day 1: Physical Infrastructure</h4>
-                            <p class="text-sm text-slate-500 italic">Task Complete: PC Assembly & Component Identification.</p>
+                            <h4 class="font-bold text-lg text-green-800 mb-2" id="day1-h4">Day 1: Physical Infrastructure</h4>
+                            <p class="text-sm text-slate-500 italic" id="day1-p">Task Complete: PC Assembly & Component Identification.</p>
                         </div>
                     </div>
 
@@ -124,20 +136,21 @@
                         </div>
                         <div class="bg-white p-2 rounded-2xl border border-blue-100 shadow-md relative overflow-hidden" id="content-2">
                             <div class="p-4 border-b border-slate-50">
-                                <h4 class="font-bold text-lg text-blue-800">Day 2: OS & Networking</h4>
-                                <p class="text-slate-500 text-xs">Infrastructure Focus: Getting the machine online.</p>
+                                <h4 class="font-bold text-lg text-blue-800" id="day2-h4">Day 2: OS & Networking</h4>
+                                <p class="text-slate-500 text-xs" id="day2-sub">Infrastructure Focus: Getting the machine online.</p>
                             </div>
                             
+                            <!-- Task 1 Dropdown -->
                             <details class="group border-b border-slate-50">
                                 <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 transition-colors">
                                     <span class="text-sm font-semibold text-slate-700 flex items-center gap-3">
                                         <i class="fas fa-chevron-right text-[10px] text-slate-400 transition-transform"></i>
-                                        1. Create Bootable USB
+                                        <span id="d2-t1-title">1. Create Bootable USB</span>
                                     </span>
                                     <span class="text-[10px] font-bold text-blue-500 bg-blue-50 px-2 py-1 rounded">INFRA</span>
                                 </summary>
-                                <div class="px-11 pb-6 pt-2 space-y-3">
-                                    <ol class="text-xs text-slate-600 list-decimal space-y-2">
+                                <div class="px-11 pb-6 pt-2 space-y-3 text-xs text-slate-600" id="d2-t1-steps">
+                                    <ol class="list-decimal space-y-2">
                                         <li>Insert a clean USB drive (8GB+).</li>
                                         <li>Go to the <a href="https://www.microsoft.com/software-download/windows11" target="_blank" class="text-blue-600 font-bold underline">Official Windows Download Page</a>.</li>
                                         <li>Download the "Media Creation Tool".</li>
@@ -146,39 +159,41 @@
                                 </div>
                             </details>
 
+                            <!-- Task 2 Dropdown -->
                             <details class="group border-b border-slate-50">
                                 <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 transition-colors">
                                     <span class="text-sm font-semibold text-slate-700 flex items-center gap-3">
                                         <i class="fas fa-chevron-right text-[10px] text-slate-400 transition-transform"></i>
-                                        2. Install Windows 11
+                                        <span id="d2-t2-title">2. Install Windows 11</span>
                                     </span>
                                     <span class="text-[10px] font-bold text-blue-500 bg-blue-50 px-2 py-1 rounded">INFRA</span>
                                 </summary>
-                                <div class="px-11 pb-6 pt-2 space-y-3">
-                                    <ol class="text-xs text-slate-600 list-decimal space-y-2">
+                                <div class="px-11 pb-6 pt-2 space-y-3 text-xs text-slate-600" id="d2-t2-steps">
+                                    <ol class="list-decimal space-y-2">
                                         <li>Plug the USB into your new build and boot it up.</li>
                                         <li>Enter BIOS (F2, F12, or DEL) to change the boot order to USB first.</li>
                                         <li>Follow the setup steps and select your primary storage drive.</li>
                                     </ol>
-                                    <a href="https://www.microsoft.com/en-us/windows/learning-center/how-to-install-windows-11" target="_blank" class="inline-block text-[10px] font-bold text-white bg-blue-600 px-3 py-1 rounded hover:bg-blue-700">Official Microsoft Guide</a>
+                                    <a href="https://www.microsoft.com/en-us/windows/learning-center/how-to-install-windows-11" target="_blank" class="inline-block text-[10px] font-bold text-white bg-blue-600 px-3 py-1 rounded hover:bg-blue-700" id="d2-t2-link">Official Microsoft Guide</a>
                                 </div>
                             </details>
 
+                            <!-- Task 3 Dropdown -->
                             <details class="group">
                                 <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 transition-colors">
                                     <span class="text-sm font-semibold text-slate-700 flex items-center gap-3">
                                         <i class="fas fa-chevron-right text-[10px] text-slate-400 transition-transform"></i>
-                                        3. Network Connectivity Test
+                                        <span id="d2-t3-title">3. Network Connectivity Test</span>
                                     </span>
                                     <span class="text-[10px] font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded">NET</span>
                                 </summary>
-                                <div class="px-11 pb-6 pt-2 space-y-3">
-                                    <ol class="text-xs text-slate-600 list-decimal space-y-2">
+                                <div class="px-11 pb-6 pt-2 space-y-3 text-xs text-slate-600" id="d2-t3-steps">
+                                    <ol class="list-decimal space-y-2">
                                         <li>Search for "cmd" in the Start menu and open it.</li>
                                         <li>Type <code class="bg-slate-100 px-1 rounded">ipconfig</code> to find your local IP address.</li>
                                         <li>Type <code class="bg-slate-100 px-1 rounded">ping 8.8.8.8</code> to verify internet access.</li>
                                     </ol>
-                                    <a href="https://killercoda.com/playgrounds" target="_blank" class="inline-block text-[10px] font-bold text-white bg-slate-800 px-3 py-1 rounded hover:bg-black">Terminal Sandbox</a>
+                                    <a href="https://killercoda.com/playgrounds" target="_blank" class="inline-block text-[10px] font-bold text-white bg-slate-800 px-3 py-1 rounded hover:bg-black" id="d2-t3-link">Terminal Sandbox</a>
                                 </div>
                             </details>
                         </div>
@@ -193,17 +208,17 @@
                         <div class="bg-white p-2 rounded-2xl border border-purple-100 shadow-sm relative overflow-hidden locked-day" id="content-3">
                             <div class="absolute inset-0 bg-slate-50/40 backdrop-blur-[2px] z-20 flex flex-col items-center justify-center" id="lock-overlay-3">
                                 <i class="fas fa-lock text-slate-400 mb-2"></i>
-                                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Awaiting Authorization</span>
+                                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest" id="lock-text-3">Awaiting Authorization</span>
                             </div>
                             <div class="p-4 border-b border-slate-50">
-                                <h4 class="font-bold text-lg text-purple-800">Day 3: Web Dev (Frontend)</h4>
+                                <h4 class="font-bold text-lg text-purple-800" id="day3-h4">Day 3: Web Dev (Frontend)</h4>
                             </div>
                             <details class="group p-4">
                                 <summary class="flex items-center justify-between cursor-pointer">
-                                    <span class="text-sm font-semibold text-slate-700">Build your Profile Page</span>
+                                    <span class="text-sm font-semibold text-slate-700" id="d3-t1-title">Build your Profile Page</span>
                                     <span class="text-[10px] font-bold text-purple-500 bg-purple-50 px-2 py-1 rounded">DEV</span>
                                 </summary>
-                                <div class="pt-4 text-xs text-slate-600 space-y-2">
+                                <div class="pt-4 text-xs text-slate-600 space-y-2" id="d3-t1-steps">
                                     <p>1. Open <a href="https://codepen.io/pen/" target="_blank" class="text-purple-600 underline">CodePen</a>.</p>
                                     <p>2. Start with basic HTML tags: `h1`, `p`, and `img`.</p>
                                     <p>3. Use CSS classes to change colors and fonts.</p>
@@ -221,16 +236,17 @@
                         <div class="bg-white p-2 rounded-2xl border border-purple-100 shadow-sm relative overflow-hidden locked-day" id="content-4">
                             <div class="absolute inset-0 bg-slate-50/40 backdrop-blur-[2px] z-20 flex flex-col items-center justify-center" id="lock-overlay-4">
                                 <i class="fas fa-lock text-slate-400 mb-2"></i>
+                                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest" id="lock-text-4">Awaiting Authorization</span>
                             </div>
                             <div class="p-4 border-b border-slate-50">
-                                <h4 class="font-bold text-lg text-purple-800">Day 4: Coding (Python)</h4>
+                                <h4 class="font-bold text-lg text-purple-800" id="day4-h4">Day 4: Coding (Python)</h4>
                             </div>
                             <details class="group p-4">
                                 <summary class="flex items-center justify-between cursor-pointer">
-                                    <span class="text-sm font-semibold text-slate-700">Logic & Math Mini-Games</span>
+                                    <span class="text-sm font-semibold text-slate-700" id="d4-t1-title">Logic & Math Mini-Games</span>
                                     <span class="text-[10px] font-bold text-purple-500 bg-purple-50 px-2 py-1 rounded">DEV</span>
                                 </summary>
-                                <div class="pt-4 text-xs text-slate-600 space-y-2">
+                                <div class="pt-4 text-xs text-slate-600 space-y-2" id="d4-t1-steps">
                                     <p>1. Open the <a href="https://replit.com/languages/python3" target="_blank" class="text-purple-600 underline">Python Sandbox</a>.</p>
                                     <p>2. Learn about `variables`, `loops`, and `if` statements.</p>
                                     <p>3. Challenge: Build a simple calculator!</p>
@@ -247,10 +263,11 @@
                         <div class="bg-white p-2 rounded-2xl border border-orange-100 shadow-sm relative overflow-hidden locked-day" id="content-5">
                              <div class="absolute inset-0 bg-slate-50/40 backdrop-blur-[2px] z-20 flex flex-col items-center justify-center" id="lock-overlay-5">
                                 <i class="fas fa-lock text-slate-400 mb-2"></i>
+                                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest" id="lock-text-5">Awaiting Authorization</span>
                             </div>
                             <div class="p-4">
-                                <h4 class="font-bold text-lg text-orange-800">Day 5: Deployment & Review</h4>
-                                <p class="text-xs text-slate-500 mt-2">Putting your projects on the real web.</p>
+                                <h4 class="font-bold text-lg text-orange-800" id="day5-h4">Day 5: Deployment & Review</h4>
+                                <p class="text-xs text-slate-500 mt-2" id="day5-sub">Putting your projects on the real web.</p>
                             </div>
                         </div>
                     </div>
@@ -263,23 +280,27 @@
                 <div class="bg-slate-900 p-6 rounded-3xl text-white shadow-xl">
                     <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
                         <i class="fas fa-shield-alt text-indigo-400"></i>
-                        Mentor Status
+                        <span id="side-mentor-title">Mentor Status</span>
                     </h3>
                     <div class="space-y-4" id="authorized-list">
                         <div class="flex items-center justify-between text-xs">
-                            <span class="text-slate-400">Day 1: Hardware</span>
-                            <span class="text-green-400 font-bold">✓ DONE</span>
+                            <span class="text-slate-400" id="side-d1-text">Day 1: Hardware</span>
+                            <span class="text-green-400 font-bold" id="side-d1-status">✓ DONE</span>
                         </div>
                         <div class="flex items-center justify-between text-xs" id="side-2">
-                            <span class="text-slate-200">Day 2: OS/Net</span>
-                            <span class="text-blue-400 font-bold">● ACTIVE</span>
+                            <span class="text-slate-200" id="side-d2-text">Day 2: OS/Net</span>
+                            <span class="text-blue-400 font-bold" id="side-d2-status">● ACTIVE</span>
                         </div>
                         <div class="flex items-center justify-between text-xs opacity-40" id="side-3">
-                            <span class="text-slate-400 italic">Day 3: Web Dev</span>
+                            <span class="text-slate-400 italic" id="side-d3-text">Day 3: Web Dev</span>
                             <i class="fas fa-lock"></i>
                         </div>
                         <div class="flex items-center justify-between text-xs opacity-40" id="side-4">
-                            <span class="text-slate-400 italic">Day 4: Python</span>
+                            <span class="text-slate-400 italic" id="side-d4-text">Day 4: Python</span>
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <div class="flex items-center justify-between text-xs opacity-40" id="side-5">
+                            <span class="text-slate-400 italic" id="side-d5-text">Day 5: Review</span>
                             <i class="fas fa-lock"></i>
                         </div>
                     </div>
@@ -287,7 +308,7 @@
 
                 <div class="bg-indigo-600 p-6 rounded-3xl text-white shadow-lg relative overflow-hidden">
                     <div class="relative z-10">
-                        <h3 class="font-bold text-lg mb-2">Luis's Lab</h3>
+                        <h3 class="font-bold text-lg mb-2" id="side-lab-title">Luis's Lab</h3>
                         <div class="space-y-2">
                             <a href="https://replit.com" target="_blank" class="block p-2 bg-indigo-500/50 rounded-xl text-xs hover:bg-indigo-400 transition-colors">
                                 <i class="fas fa-cube mr-2"></i> Replit (Python)
@@ -303,7 +324,6 @@
         </div>
     </main>
 
-    <!-- Simple Toast Notification -->
     <div id="toast">Mentor Authorized! Next day unlocked.</div>
 
     <footer class="max-w-5xl mx-auto px-6 py-12 border-t border-slate-200 mt-12 text-center text-slate-400 text-sm">
@@ -312,48 +332,235 @@
 
     <script>
         let unlockedDay = 2;
-        const mentorSecret = "admin"; // Change this to your desired password
+        let currentLang = 'en';
+        const mentorSecret = "admin";
+
+        const text = {
+            en: {
+                nav: "Your IT Journey",
+                mentor: "Mentor Auth",
+                badge: "CURRENT PROGRESS: HARDWARE READY",
+                hello: "Welcome,",
+                intro: "Your journey into the world of IT continues. Explore each daily mission below to find the steps, guides, and interactive tools designed to help you build your skills and discover new interests.",
+                tasks: "Daily Tasks & Steps",
+                d1_h4: "Day 1: Physical Infrastructure",
+                d1_p: "Task Complete: PC Assembly & Component Identification.",
+                d2_h4: "Day 2: OS & Networking",
+                d2_sub: "Infrastructure Focus: Getting the machine online.",
+                d2_t1: "1. Create Bootable USB",
+                d2_t1_steps: "<ol class='list-decimal space-y-2'><li>Insert a clean USB drive (8GB+).</li><li>Go to the <a href='https://www.microsoft.com/software-download/windows11' target='_blank' class='text-blue-600 font-bold underline'>Official Windows Download Page</a>.</li><li>Download the 'Media Creation Tool'.</li><li>Run it and select 'Create installation media' for your USB.</li></ol>",
+                d2_t2: "2. Install Windows 11",
+                d2_t2_steps: "<ol class='list-decimal space-y-2'><li>Plug the USB into your new build and boot it up.</li><li>Enter BIOS (F2, F12, or DEL) to change the boot order to USB first.</li><li>Follow the setup steps and select your primary storage drive.</li></ol>",
+                d2_t2_link: "Official Microsoft Guide",
+                d2_t3: "3. Network Connectivity Test",
+                d2_t3_steps: "<ol class='list-decimal space-y-2'><li>Search for 'cmd' in the Start menu and open it.</li><li>Type <code class='bg-slate-100 px-1 rounded'>ipconfig</code> to find your local IP address.</li><li>Type <code class='bg-slate-100 px-1 rounded'>ping 8.8.8.8</code> to verify internet access.</li></ol>",
+                d2_t3_link: "Terminal Sandbox",
+                d3_h4: "Day 3: Web Dev (Frontend)",
+                d3_t1: "Build your Profile Page",
+                d3_t1_steps: "<p>1. Open <a href='https://codepen.io/pen/' target='_blank' class='text-purple-600 underline'>CodePen</a>.</p><p>2. Start with basic HTML tags: `h1`, `p`, and `img`.</p><p>3. Use CSS classes to change colors and fonts.</p>",
+                d4_h4: "Day 4: Coding (Python)",
+                d4_t1: "Logic & Math Mini-Games",
+                d4_t1_steps: "<p>1. Open the <a href='https://replit.com/languages/python3' target='_blank' class='text-purple-600 underline'>Python Sandbox</a>.</p><p>2. Learn about `variables`, `loops`, and `if` statements.</p><p>3. Challenge: Build a simple calculator!</p>",
+                d5_h4: "Day 5: Deployment & Review",
+                d5_sub: "Putting your projects on the real web.",
+                await: "Awaiting Authorization",
+                statusTitle: "Mentor Status",
+                sd1: "Day 1: Hardware",
+                sd2: "Day 2: OS/Net",
+                sd3: "Day 3: Web Dev",
+                sd4: "Day 4: Python",
+                sd5: "Day 5: Review",
+                sd_done: "✓ DONE",
+                sd_active: "● ACTIVE",
+                labTitle: "Luis's Lab",
+                toast: "Mentor Authorized! Next day unlocked.",
+                prompt: "Enter Mentor Passcode to Unlock Next Step:",
+                error: "Incorrect Passcode. Authorization Denied."
+            },
+            de: {
+                nav: "Deine IT-Reise",
+                mentor: "Mentor Freischaltung",
+                badge: "AKTUELLER STAND: HARDWARE BEREIT",
+                hello: "Willkommen,",
+                intro: "Deine Reise in die Welt der IT geht weiter. Entdecke unten jede tägliche Mission, um Schritte, Anleitungen und interaktive Tools zu finden, die dir helfen, deine Fähigkeiten auszubauen.",
+                tasks: "Tägliche Aufgaben & Schritte",
+                d1_h4: "Tag 1: Physische Infrastruktur",
+                d1_p: "Aufgabe erledigt: PC-Montage & Komponenten-Identifizierung.",
+                d2_h4: "Tag 2: Betriebssystem & Netzwerk",
+                d2_sub: "Infrastruktur-Fokus: Den Rechner online bringen.",
+                d2_t1: "1. Bootfähigen USB-Stick erstellen",
+                d2_t1_steps: "<ol class='list-decimal space-y-2'><li>Einen leeren USB-Stick einstecken (8GB+).</li><li>Besuche die <a href='https://www.microsoft.com/de-de/software-download/windows11' target='_blank' class='text-blue-600 font-bold underline'>offizielle Windows Download-Seite</a>.</li><li>Lade das 'Media Creation Tool' herunter.</li><li>Starte es und wähle 'Installationsmedien erstellen'.</li></ol>",
+                d2_t2: "2. Windows 11 Installation",
+                d2_t2_steps: "<ol class='list-decimal space-y-2'><li>Stecke den USB-Stick in den neuen PC und starte ihn.</li><li>Rufe das BIOS auf (F2, F12 oder ENTF), um die Boot-Reihenfolge zu ändern.</li><li>Folge dem Setup und wähle das Hauptlaufwerk aus.</li></ol>",
+                d2_t2_link: "Offizieller Microsoft Guide",
+                d2_t3: "3. Netzwerk-Verbindungstest",
+                d2_t3_steps: "<ol class='list-decimal space-y-2'><li>Suche nach 'cmd' im Startmenü und öffne es.</li><li>Tippe <code class='bg-slate-100 px-1 rounded'>ipconfig</code>, um deine IP zu finden.</li><li>Tippe <code class='bg-slate-100 px-1 rounded'>ping 8.8.8.8</code>, um den Internetzugriff zu prüfen.</li></ol>",
+                d2_t3_link: "Terminal Sandbox",
+                d3_h4: "Tag 3: Web-Entwicklung (Frontend)",
+                d3_t1: "Erstelle deine Profilseite",
+                d3_t1_steps: "<p>1. Öffne <a href='https://codepen.io/pen/' target='_blank' class='text-purple-600 underline'>CodePen</a>.</p><p>2. Nutze HTML Tags: `h1`, `p`, und `img`.</p><p>3. Nutze CSS für Farben und Schriftarten.</p>",
+                d4_h4: "Tag 4: Programmierung (Python)",
+                d4_t1: "Logik & Mathe Mini-Spiele",
+                d4_t1_steps: "<p>1. Öffne die <a href='https://replit.com/languages/python3' target='_blank' class='text-purple-600 underline'>Python Sandbox</a>.</p><p>2. Lerne `Variables`, `Loops`, und `If` Abfragen.</p><p>3. Aufgabe: Baue einen Taschenrechner!</p>",
+                d5_h4: "Tag 5: Veröffentlichung & Review",
+                d5_sub: "Deine Projekte im echten Web veröffentlichen.",
+                await: "Warten auf Freischaltung",
+                statusTitle: "Mentor Status",
+                sd1: "Tag 1: Hardware",
+                sd2: "Tag 2: OS/Netz",
+                sd3: "Tag 3: Web Dev",
+                sd4: "Tag 4: Python",
+                sd5: "Tag 5: Review",
+                sd_done: "✓ ERLEDIGT",
+                sd_active: "● AKTIV",
+                labTitle: "Luis' Labor",
+                toast: "Mentor autorisiert! Nächster Tag freigeschaltet.",
+                prompt: "Mentor-Passwort zum Freischalten eingeben:",
+                error: "Falsches Passwort. Zugriff verweigert."
+            }
+        };
+
+        // Utility to safely set innerText
+        function safeSetText(id, value) {
+            const el = document.getElementById(id);
+            if (el) el.innerText = value;
+        }
+
+        // Utility to safely set innerHTML
+        function safeSetHTML(id, value) {
+            const el = document.getElementById(id);
+            if (el) el.innerHTML = value;
+        }
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            const t = text[lang];
+
+            // Update Global UI
+            safeSetText('nav-title', t.nav);
+            safeSetText('mentor-btn-text', t.mentor);
+            safeSetText('progress-badge', t.badge);
+            safeSetText('welcome-hello', t.hello);
+            safeSetText('welcome-p', t.intro);
+            safeSetText('roadmap-h2', t.tasks);
+
+            // Update Roadmap Days
+            safeSetText('day1-h4', t.d1_h4);
+            safeSetText('day1-p', t.d1_p);
+
+            safeSetText('day2-h4', t.d2_h4);
+            safeSetText('day2-sub', t.d2_sub);
+            safeSetText('d2-t1-title', t.d2_t1);
+            safeSetHTML('d2-t1-steps', t.d2_t1_steps);
+            safeSetText('d2-t2-title', t.d2_t2);
+            safeSetHTML('d2-t2-steps', t.d2_t2_steps);
+            safeSetText('d2-t2-link', t.d2_t2_link);
+            safeSetText('d2-t3-title', t.d2_t3);
+            safeSetHTML('d2-t3-steps', t.d2_t3_steps);
+            safeSetText('d2-t3-link', t.d2_t3_link);
+
+            safeSetText('day3-h4', t.d3_h4);
+            safeSetText('d3-t1-title', t.d3_t1);
+            safeSetHTML('d3-t1-steps', t.d3_t1_steps);
+
+            safeSetText('day4-h4', t.d4_h4);
+            safeSetText('d4-t1-title', t.d4_t1);
+            safeSetHTML('d4-t1-steps', t.d4_t1_steps);
+
+            safeSetText('day5-h4', t.d5_h4);
+            safeSetText('day5-sub', t.d5_sub);
+
+            // Update Locked Text
+            for(let i=3; i<=5; i++) {
+                safeSetText(`lock-text-${i}`, t.await);
+            }
+
+            // Update Sidebar Mentor Status
+            safeSetText('side-mentor-title', t.statusTitle);
+            
+            // Day 1
+            safeSetText('side-d1-text', t.sd1);
+            safeSetText('side-d1-status', t.sd_done);
+            
+            // Handle Sidebar Days based on unlock status
+            // We iterate through all days to ensure they update regardless of innerHTML replacement
+            for (let i = 2; i <= 5; i++) {
+                const textId = `side-d${i}-text`;
+                const statusId = `side-d${i}-status`;
+                const parentId = `side-${i}`;
+                
+                const textEl = document.getElementById(textId);
+                const statusEl = document.getElementById(statusId);
+                
+                if (textEl && statusEl) {
+                    textEl.innerText = t[`sd${i}`];
+                    statusEl.innerText = t.sd_active;
+                } else if (unlockedDay >= i) {
+                    // If the specific span IDs are gone (replaced by innerHTML), update the parent container
+                    const parentEl = document.getElementById(parentId);
+                    if (parentEl) {
+                        parentEl.innerHTML = `<span class="text-slate-200">${t[`sd${i}`]}</span> <span class="text-indigo-400 font-bold">${t.sd_active}</span>`;
+                    }
+                } else {
+                    // Still locked
+                    const parentEl = document.getElementById(parentId);
+                    if (parentEl) {
+                        parentEl.innerHTML = `<span class="text-slate-400 italic">${t[`sd${i}`]}</span> <i class="fas fa-lock"></i>`;
+                    }
+                }
+            }
+
+            safeSetText('side-lab-title', t.labTitle);
+            safeSetText('toast', t.toast);
+
+            // Toggle Visuals for Buttons
+            const btnEn = document.getElementById('lang-en');
+            const btnDe = document.getElementById('lang-de');
+            if (btnEn) {
+                btnEn.classList.toggle('lang-active', lang === 'en');
+                btnEn.classList.toggle('text-slate-500', lang !== 'en');
+            }
+            if (btnDe) {
+                btnDe.classList.toggle('lang-active', lang === 'de');
+                btnDe.classList.toggle('text-slate-500', lang !== 'de');
+            }
+        }
 
         function requestUnlock() {
-            const pass = prompt("Enter Mentor Passcode to Unlock Next Step:");
+            const t = text[currentLang];
+            const pass = prompt(t.prompt);
             if (pass === mentorSecret) {
                 unlockNextDay();
             } else if (pass !== null) {
-                alert("Incorrect Passcode. Authorization Denied.");
+                alert(t.error);
             }
         }
 
         function unlockNextDay() {
-            if (unlockedDay >= 5) {
-                alert("All days are already unlocked!");
-                return;
-            }
-            
+            if (unlockedDay >= 5) return;
             unlockedDay++;
             
-            // Unlock Content
             const content = document.getElementById(`content-${unlockedDay}`);
             const overlay = document.getElementById(`lock-overlay-${unlockedDay}`);
-            
             if (content) content.classList.remove('locked-day');
             if (overlay) overlay.style.display = 'none';
 
-            // Update Sidebar
+            const t = text[currentLang];
             const sideItem = document.getElementById(`side-${unlockedDay}`);
             if (sideItem) {
                 sideItem.classList.remove('opacity-40');
-                sideItem.innerHTML = `<span class="text-slate-200">Day ${unlockedDay} Mission</span> <span class="text-indigo-400 font-bold">● ACTIVE</span>`;
+                sideItem.innerHTML = `<span class="text-slate-200">${t[`sd${unlockedDay}`]}</span> <span class="text-indigo-400 font-bold">${t.sd_active}</span>`;
             }
 
-            // Show Toast
             const toast = document.getElementById("toast");
-            toast.className = "show";
-            setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
-
-            // Scroll to newly unlocked day
-            document.getElementById(`day-${unlockedDay}`).scrollIntoView({ behavior: 'smooth', block: 'center' });
+            if (toast) {
+                toast.className = "show";
+                setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
+            }
+            
+            const dayEl = document.getElementById(`day-${unlockedDay}`);
+            if (dayEl) dayEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
     </script>
-
 </body>
 </html>
