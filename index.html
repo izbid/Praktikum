@@ -26,6 +26,12 @@
             opacity: 0.5;
             user-select: none;
         }
+        /* Completed Day Styling */
+        .completed-day-card {
+            filter: blur(1.5px) grayscale(20%);
+            opacity: 0.8;
+            transition: all 0.5s ease;
+        }
         .day-container {
             transition: all 0.5s ease;
         }
@@ -95,8 +101,8 @@
     <main class="max-w-5xl mx-auto px-6 py-12">
         <!-- Welcome Section -->
         <section class="mb-12">
-            <div class="inline-block px-3 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full mb-4">
-                <i class="fas fa-check-circle mr-1"></i> <span id="progress-badge">CURRENT PROGRESS: HARDWARE READY</span>
+            <div class="inline-block px-3 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full mb-4 shadow-sm">
+                <i class="fas fa-check-circle mr-1"></i> <span id="progress-badge">CURRENT PROGRESS: OS & NETWORK READY</span>
             </div>
             <h1 class="text-4xl md:text-5xl font-extrabold mb-4">
                 <span id="welcome-hello">Welcome,</span> <span class="gradient-text">Luis!</span>
@@ -122,106 +128,93 @@
                         <div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-green-500 z-10 flex items-center justify-center shadow-lg shadow-green-200">
                             <i class="fas fa-check text-white text-[10px]"></i>
                         </div>
-                        <div class="bg-white p-6 rounded-2xl border border-green-100 shadow-sm opacity-60">
+                        <div class="bg-white p-6 rounded-2xl border border-green-100 shadow-sm completed-day-card" id="card-1">
                             <h4 class="font-bold text-lg text-green-800 mb-2" id="day1-h4">Day 1: Physical Infrastructure</h4>
                             <p class="text-sm text-slate-500 italic" id="day1-p">Task Complete: PC Assembly & Component Identification.</p>
                         </div>
                     </div>
 
-                    <!-- Day 2 (Active) -->
+                    <!-- Day 2 (Done) -->
                     <div class="relative pl-8 pb-10 step-item day-container" id="day-2">
-                        <div class="step-line absolute left-[11px] top-6 bottom-0 w-0.5 bg-slate-200"></div>
-                        <div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-blue-500 z-10 flex items-center justify-center shadow-lg shadow-blue-200">
-                            <div class="w-2 h-2 bg-white rounded-full"></div>
+                        <div class="step-line absolute left-[11px] top-6 bottom-0 w-0.5 bg-green-200" id="line-2"></div>
+                        <div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-green-500 z-10 flex items-center justify-center shadow-lg shadow-green-200" id="icon-2">
+                            <i class="fas fa-check text-white text-[10px]"></i>
                         </div>
-                        <div class="bg-white p-2 rounded-2xl border border-blue-100 shadow-md relative overflow-hidden" id="content-2">
+                        <div class="bg-white p-2 rounded-2xl border border-blue-100 shadow-sm relative overflow-hidden completed-day-card" id="content-2">
                             <div class="p-4 border-b border-slate-50">
                                 <h4 class="font-bold text-lg text-blue-800" id="day2-h4">Day 2: OS & Networking</h4>
                                 <p class="text-slate-500 text-xs" id="day2-sub">Infrastructure Focus: Getting the machine online.</p>
                             </div>
-                            
-                            <!-- Task 1 Dropdown -->
-                            <details class="group border-b border-slate-50">
-                                <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 transition-colors">
-                                    <span class="text-sm font-semibold text-slate-700 flex items-center gap-3">
-                                        <i class="fas fa-chevron-right text-[10px] text-slate-400 transition-transform"></i>
-                                        <span id="d2-t1-title">1. Create Bootable USB</span>
-                                    </span>
-                                    <span class="text-[10px] font-bold text-blue-500 bg-blue-50 px-2 py-1 rounded">INFRA</span>
-                                </summary>
-                                <div class="px-11 pb-6 pt-2 space-y-3 text-xs text-slate-600" id="d2-t1-steps">
-                                    <ol class="list-decimal space-y-2">
-                                        <li>Insert a clean USB drive (8GB+).</li>
-                                        <li>Go to the <a href="https://www.microsoft.com/software-download/windows11" target="_blank" class="text-blue-600 font-bold underline">Official Windows Download Page</a>.</li>
-                                        <li>Download the "Media Creation Tool".</li>
-                                        <li>Run it and select "Create installation media" for your USB.</li>
-                                    </ol>
-                                </div>
-                            </details>
-
-                            <!-- Task 2 Dropdown -->
-                            <details class="group border-b border-slate-50">
-                                <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 transition-colors">
-                                    <span class="text-sm font-semibold text-slate-700 flex items-center gap-3">
-                                        <i class="fas fa-chevron-right text-[10px] text-slate-400 transition-transform"></i>
-                                        <span id="d2-t2-title">2. Install Windows 11</span>
-                                    </span>
-                                    <span class="text-[10px] font-bold text-blue-500 bg-blue-50 px-2 py-1 rounded">INFRA</span>
-                                </summary>
-                                <div class="px-11 pb-6 pt-2 space-y-3 text-xs text-slate-600" id="d2-t2-steps">
-                                    <ol class="list-decimal space-y-2">
-                                        <li>Plug the USB into your new build and boot it up.</li>
-                                        <li>Enter BIOS (F2, F12, or DEL) to change the boot order to USB first.</li>
-                                        <li>Follow the setup steps and select your primary storage drive.</li>
-                                    </ol>
-                                    <a href="https://www.microsoft.com/en-us/windows/learning-center/how-to-install-windows-11" target="_blank" class="inline-block text-[10px] font-bold text-white bg-blue-600 px-3 py-1 rounded hover:bg-blue-700" id="d2-t2-link">Official Microsoft Guide</a>
-                                </div>
-                            </details>
-
-                            <!-- Task 3 Dropdown -->
-                            <details class="group">
-                                <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 transition-colors">
-                                    <span class="text-sm font-semibold text-slate-700 flex items-center gap-3">
-                                        <i class="fas fa-chevron-right text-[10px] text-slate-400 transition-transform"></i>
-                                        <span id="d2-t3-title">3. Network Connectivity Test</span>
-                                    </span>
-                                    <span class="text-[10px] font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded">NET</span>
-                                </summary>
-                                <div class="px-11 pb-6 pt-2 space-y-3 text-xs text-slate-600" id="d2-t3-steps">
-                                    <ol class="list-decimal space-y-2">
-                                        <li>Search for "cmd" in the Start menu and open it.</li>
-                                        <li>Type <code class="bg-slate-100 px-1 rounded">ipconfig</code> to find your local IP address.</li>
-                                        <li>Type <code class="bg-slate-100 px-1 rounded">ping 8.8.8.8</code> to verify internet access.</li>
-                                    </ol>
-                                    <a href="https://killercoda.com/playgrounds" target="_blank" class="inline-block text-[10px] font-bold text-white bg-slate-800 px-3 py-1 rounded hover:bg-black" id="d2-t3-link">Terminal Sandbox</a>
-                                </div>
-                            </details>
                         </div>
                     </div>
 
-                    <!-- Day 3 (Locked) -->
+                    <!-- Day 3 (Active) -->
                     <div class="relative pl-8 pb-10 step-item day-container" id="day-3">
-                        <div class="step-line absolute left-[11px] top-6 bottom-0 w-0.5 bg-slate-200"></div>
-                        <div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-purple-500 z-10 flex items-center justify-center shadow-lg shadow-purple-200">
+                        <div class="step-line absolute left-[11px] top-6 bottom-0 w-0.5 bg-slate-200" id="line-3"></div>
+                        <div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-purple-500 z-10 flex items-center justify-center shadow-lg shadow-purple-200" id="icon-3">
                             <div class="w-2 h-2 bg-white rounded-full"></div>
                         </div>
-                        <div class="bg-white p-2 rounded-2xl border border-purple-100 shadow-sm relative overflow-hidden locked-day" id="content-3">
-                            <div class="absolute inset-0 bg-slate-50/40 backdrop-blur-[2px] z-20 flex flex-col items-center justify-center" id="lock-overlay-3">
+                        <div class="bg-white p-2 rounded-2xl border border-purple-100 shadow-md relative overflow-hidden" id="content-3">
+                            <div class="absolute inset-0 bg-slate-50/40 backdrop-blur-[2px] z-20 flex flex-col items-center justify-center" id="lock-overlay-3" style="display: none;">
                                 <i class="fas fa-lock text-slate-400 mb-2"></i>
                                 <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest" id="lock-text-3">Awaiting Authorization</span>
                             </div>
                             <div class="p-4 border-b border-slate-50">
-                                <h4 class="font-bold text-lg text-purple-800" id="day3-h4">Day 3: Web Dev (Frontend)</h4>
+                                <h4 class="font-bold text-lg text-purple-800" id="day3-h4">Day 3: AI in Practice</h4>
+                                <p class="text-slate-500 text-xs" id="day3-sub">Exploring Machine Learning and Ethical AI.</p>
                             </div>
-                            <details class="group p-4">
-                                <summary class="flex items-center justify-between cursor-pointer">
-                                    <span class="text-sm font-semibold text-slate-700" id="d3-t1-title">Build your Profile Page</span>
-                                    <span class="text-[10px] font-bold text-purple-500 bg-purple-50 px-2 py-1 rounded">DEV</span>
+                            
+                            <!-- AI Task 1 -->
+                            <details class="group border-b border-slate-50">
+                                <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 transition-colors">
+                                    <span class="text-sm font-semibold text-slate-700 flex items-center gap-3">
+                                        <i class="fas fa-chevron-right text-[10px] text-slate-400 transition-transform"></i>
+                                        <span id="d3-t1-title">1. Data Training (Classification)</span>
+                                    </span>
+                                    <span class="text-[10px] font-bold text-purple-500 bg-purple-50 px-2 py-1 rounded">AI</span>
                                 </summary>
-                                <div class="pt-4 text-xs text-slate-600 space-y-2" id="d3-t1-steps">
-                                    <p>1. Open <a href="https://codepen.io/pen/" target="_blank" class="text-purple-600 underline">CodePen</a>.</p>
-                                    <p>2. Start with basic HTML tags: `h1`, `p`, and `img`.</p>
-                                    <p>3. Use CSS classes to change colors and fonts.</p>
+                                <div class="px-11 pb-6 pt-2 space-y-3 text-xs text-slate-600" id="d3-t1-steps">
+                                    <ol class="list-decimal space-y-2">
+                                        <li>Open <a href="https://machinelearningforkids.co.uk/" target="_blank" class="text-purple-600 font-bold underline">ML for Kids</a>.</li>
+                                        <li>Create a project (e.g., 'Smart Classroom') and define your buckets (labels).</li>
+                                        <li>Gather and label data (text or images) to help the computer learn the difference.</li>
+                                    </ol>
+                                </div>
+                            </details>
+
+                            <!-- AI Task 2 -->
+                            <details class="group border-b border-slate-50">
+                                <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 transition-colors">
+                                    <span class="text-sm font-semibold text-slate-700 flex items-center gap-3">
+                                        <i class="fas fa-chevron-right text-[10px] text-slate-400 transition-transform"></i>
+                                        <span id="d3-t2-title">2. Model Testing & Confidence</span>
+                                    </span>
+                                    <span class="text-[10px] font-bold text-purple-500 bg-purple-50 px-2 py-1 rounded">AI</span>
+                                </summary>
+                                <div class="px-11 pb-6 pt-2 space-y-3 text-xs text-slate-600" id="d3-t2-steps">
+                                    <ol class="list-decimal space-y-2">
+                                        <li>Run the "Train" process on your labels.</li>
+                                        <li>Test the model with new data not included in training.</li>
+                                        <li>Analyze the "Confidence Score" – why is the AI unsure?</li>
+                                    </ol>
+                                </div>
+                            </details>
+
+                            <!-- AI Task 3 -->
+                            <details class="group">
+                                <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 transition-colors">
+                                    <span class="text-sm font-semibold text-slate-700 flex items-center gap-3">
+                                        <i class="fas fa-chevron-right text-[10px] text-slate-400 transition-transform"></i>
+                                        <span id="d3-t3-title">3. Ethics & Bias Discussion</span>
+                                    </span>
+                                    <span class="text-[10px] font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded">ETHICS</span>
+                                </summary>
+                                <div class="px-11 pb-6 pt-2 space-y-3 text-xs text-slate-600" id="d3-t3-steps">
+                                    <ol class="list-decimal space-y-2">
+                                        <li>Discuss: What happens if we only show the AI 'happy' text?</li>
+                                        <li>Try to "trick" the AI to identify bias in your own model.</li>
+                                        <li>Explore how AI safety and rules are formed in real apps.</li>
+                                    </ol>
                                 </div>
                             </details>
                         </div>
@@ -229,8 +222,8 @@
 
                     <!-- Day 4 (Locked) -->
                     <div class="relative pl-8 pb-10 step-item day-container" id="day-4">
-                        <div class="step-line absolute left-[11px] top-6 bottom-0 w-0.5 bg-slate-200"></div>
-                        <div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-purple-500 z-10 flex items-center justify-center shadow-lg shadow-purple-200">
+                        <div class="step-line absolute left-[11px] top-6 bottom-0 w-0.5 bg-slate-200" id="line-4"></div>
+                        <div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-purple-500 z-10 flex items-center justify-center shadow-lg shadow-purple-200" id="icon-4">
                             <div class="w-2 h-2 bg-white rounded-full"></div>
                         </div>
                         <div class="bg-white p-2 rounded-2xl border border-purple-100 shadow-sm relative overflow-hidden locked-day" id="content-4">
@@ -257,7 +250,7 @@
 
                     <!-- Day 5 (Locked) -->
                     <div class="relative pl-8 pb-6 step-item day-container" id="day-5">
-                        <div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-orange-500 z-10 flex items-center justify-center shadow-lg shadow-orange-200">
+                        <div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-orange-500 z-10 flex items-center justify-center shadow-lg shadow-orange-200" id="icon-5">
                             <i class="fas fa-star text-white text-[10px]"></i>
                         </div>
                         <div class="bg-white p-2 rounded-2xl border border-orange-100 shadow-sm relative overflow-hidden locked-day" id="content-5">
@@ -288,12 +281,12 @@
                             <span class="text-green-400 font-bold" id="side-d1-status">✓ DONE</span>
                         </div>
                         <div class="flex items-center justify-between text-xs" id="side-2">
-                            <span class="text-slate-200" id="side-d2-text">Day 2: OS/Net</span>
-                            <span class="text-blue-400 font-bold" id="side-d2-status">● ACTIVE</span>
+                            <span class="text-slate-400 italic" id="side-d2-text">Day 2: OS/Net</span>
+                            <span class="text-green-400 font-bold" id="side-d2-status">✓ DONE</span>
                         </div>
-                        <div class="flex items-center justify-between text-xs opacity-40" id="side-3">
-                            <span class="text-slate-400 italic" id="side-d3-text">Day 3: Web Dev</span>
-                            <i class="fas fa-lock"></i>
+                        <div class="flex items-center justify-between text-xs" id="side-3">
+                            <span class="text-slate-200" id="side-d3-text">Day 3: AI Intro</span>
+                            <span class="text-blue-400 font-bold" id="side-d3-status">● ACTIVE</span>
                         </div>
                         <div class="flex items-center justify-between text-xs opacity-40" id="side-4">
                             <span class="text-slate-400 italic" id="side-d4-text">Day 4: Python</span>
@@ -313,8 +306,8 @@
                             <a href="https://replit.com" target="_blank" class="block p-2 bg-indigo-500/50 rounded-xl text-xs hover:bg-indigo-400 transition-colors">
                                 <i class="fas fa-cube mr-2"></i> Replit (Python)
                             </a>
-                            <a href="https://codepen.io" target="_blank" class="block p-2 bg-indigo-500/50 rounded-xl text-xs hover:bg-indigo-400 transition-colors">
-                                <i class="fas fa-palette mr-2"></i> CodePen (HTML/CSS)
+                            <a href="https://machinelearningforkids.co.uk/" target="_blank" class="block p-2 bg-indigo-500/50 rounded-xl text-xs hover:bg-indigo-400 transition-colors">
+                                <i class="fas fa-brain mr-2"></i> ML for Kids
                             </a>
                         </div>
                     </div>
@@ -327,11 +320,11 @@
     <div id="toast">Mentor Authorized! Next day unlocked.</div>
 
     <footer class="max-w-5xl mx-auto px-6 py-12 border-t border-slate-200 mt-12 text-center text-slate-400 text-sm">
-        Planet | IT Praktikum 2024
+        Luis Gnida | IT Praktikum 2024
     </footer>
 
     <script>
-        let unlockedDay = 2;
+        let unlockedDay = 3; 
         let currentLang = 'en';
         const mentorSecret = "admin";
 
@@ -339,7 +332,6 @@
             en: {
                 nav: "Your IT Journey",
                 mentor: "Mentor Auth",
-                badge: "CURRENT PROGRESS: HARDWARE READY",
                 hello: "Welcome,",
                 intro: "Your journey into the world of IT continues. Explore each daily mission below to find the steps, guides, and interactive tools designed to help you build your skills and discover new interests.",
                 tasks: "Daily Tasks & Steps",
@@ -355,9 +347,14 @@
                 d2_t3: "3. Network Connectivity Test",
                 d2_t3_steps: "<ol class='list-decimal space-y-2'><li>Search for 'cmd' in the Start menu and open it.</li><li>Type <code class='bg-slate-100 px-1 rounded'>ipconfig</code> to find your local IP address.</li><li>Type <code class='bg-slate-100 px-1 rounded'>ping 8.8.8.8</code> to verify internet access.</li></ol>",
                 d2_t3_link: "Terminal Sandbox",
-                d3_h4: "Day 3: Web Dev (Frontend)",
-                d3_t1: "Build your Profile Page",
-                d3_t1_steps: "<p>1. Open <a href='https://codepen.io/pen/' target='_blank' class='text-purple-600 underline'>CodePen</a>.</p><p>2. Start with basic HTML tags: `h1`, `p`, and `img`.</p><p>3. Use CSS classes to change colors and fonts.</p>",
+                d3_h4: "Day 3: AI in Practice",
+                d3_sub: "Exploring Machine Learning and Ethical AI.",
+                d3_t1: "1. Data Training (Classification)",
+                d3_t1_steps: "<ol class='list-decimal space-y-2'><li>Open <a href='https://machinelearningforkids.co.uk/' target='_blank' class='text-purple-600 font-bold underline'>ML for Kids</a>.</li><li>Create a project (e.g., 'Smart Classroom') and define your buckets (labels).</li><li>Gather and label data (text or images) to help the computer learn the difference.</li></ol>",
+                d3_t2: "2. Model Testing & Confidence",
+                d3_t2_steps: "<ol class='list-decimal space-y-2'><li>Run the 'Train' process on your labels.</li><li>Test the model with new data not included in training.</li><li>Analyze the 'Confidence Score' – why is the AI unsure?</li></ol>",
+                d3_t3: "3. Ethics & Bias Discussion",
+                d3_t3_steps: "<ol class='list-decimal space-y-2'><li>Discuss: What happens if we only show the AI 'happy' text?</li><li>Try to 'trick' the AI to identify bias in your own model.</li><li>Explore how AI safety and rules are formed in real apps.</li></ol>",
                 d4_h4: "Day 4: Coding (Python)",
                 d4_t1: "Logic & Math Mini-Games",
                 d4_t1_steps: "<p>1. Open the <a href='https://replit.com/languages/python3' target='_blank' class='text-purple-600 underline'>Python Sandbox</a>.</p><p>2. Learn about `variables`, `loops`, and `if` statements.</p><p>3. Challenge: Build a simple calculator!</p>",
@@ -367,7 +364,7 @@
                 statusTitle: "Mentor Status",
                 sd1: "Day 1: Hardware",
                 sd2: "Day 2: OS/Net",
-                sd3: "Day 3: Web Dev",
+                sd3: "Day 3: AI Intro",
                 sd4: "Day 4: Python",
                 sd5: "Day 5: Review",
                 sd_done: "✓ DONE",
@@ -375,7 +372,15 @@
                 labTitle: "Luis's Lab",
                 toast: "Mentor Authorized! Next day unlocked.",
                 prompt: "Enter Mentor Passcode to Unlock Next Step:",
-                error: "Incorrect Passcode. Authorization Denied."
+                error: "Incorrect Passcode. Authorization Denied.",
+                progress: {
+                    1: "CURRENT PROGRESS: HARDWARE READY",
+                    2: "CURRENT PROGRESS: HARDWARE READY",
+                    3: "CURRENT PROGRESS: OS & NETWORK READY",
+                    4: "CURRENT PROGRESS: AI CONCEPTS EXPLORED",
+                    5: "CURRENT PROGRESS: PYTHON LOGIC MASTERED",
+                    6: "CURRENT PROGRESS: WEEK COMPLETE!"
+                }
             },
             de: {
                 nav: "Deine IT-Reise",
@@ -396,19 +401,24 @@
                 d2_t3: "3. Netzwerk-Verbindungstest",
                 d2_t3_steps: "<ol class='list-decimal space-y-2'><li>Suche nach 'cmd' im Startmenü und öffne es.</li><li>Tippe <code class='bg-slate-100 px-1 rounded'>ipconfig</code>, um deine IP zu finden.</li><li>Tippe <code class='bg-slate-100 px-1 rounded'>ping 8.8.8.8</code>, um den Internetzugriff zu prüfen.</li></ol>",
                 d2_t3_link: "Terminal Sandbox",
-                d3_h4: "Tag 3: Web-Entwicklung (Frontend)",
-                d3_t1: "Erstelle deine Profilseite",
-                d3_t1_steps: "<p>1. Öffne <a href='https://codepen.io/pen/' target='_blank' class='text-purple-600 underline'>CodePen</a>.</p><p>2. Nutze HTML Tags: `h1`, `p`, und `img`.</p><p>3. Nutze CSS für Farben und Schriftarten.</p>",
+                d3_h4: "Tag 3: KI in der Praxis",
+                d3_sub: "Erkundung von Machine Learning und ethischer KI.",
+                d3_t1: "1. Datentraining (Klassifizierung)",
+                d3_t1_steps: "<ol class='list-decimal space-y-2'><li>Öffne <a href='https://machinelearningforkids.co.uk/' target='_blank' class='text-purple-600 font-bold underline'>ML for Kids</a>.</li><li>Erstelle ein Projekt (z.B. 'Schlaues Klassenzimmer') und definiere Kategorien (Labels).</li><li>Sammle und beschrifte Daten (Text oder Bilder), um dem Computer beim Lernen zu helfen.</li></ol>",
+                d3_t2: "2. Modelltests & Vertrauen",
+                d3_t2_steps: "<ol class='list-decimal space-y-2'><li>Starte den 'Train'-Prozess für deine Labels.</li><li>Teste das Modell mit neuen Daten, die nicht im Training enthalten waren.</li><li>Analysiere den 'Confidence Score' – warum ist die KI unsicher?</li></ol>",
+                d3_t3: "3. Ethik & Bias-Diskussion",
+                d3_t3_steps: "<ol class='list-decimal space-y-2'><li>Diskussion: Was passiert, wenn wir der KI nur 'fröhliche' Texte zeigen?</li><li>Versuche, die KI auszutricksen, um Voreingenommenheit (Bias) im eigenen Modell zu finden.</li><li>Erfahre, wie KI-Sicherheit und Regeln in echten Apps entstehen.</li></ol>",
                 d4_h4: "Tag 4: Programmierung (Python)",
                 d4_t1: "Logik & Mathe Mini-Spiele",
-                d4_t1_steps: "<p>1. Öffne die <a href='https://replit.com/languages/python3' target='_blank' class='text-purple-600 underline'>Python Sandbox</a>.</p><p>2. Lerne `Variables`, `Loops`, und `If` Abfragen.</p><p>3. Aufgabe: Baue einen Taschenrechner!</p>",
+                d4_t1_steps: "<p>1. Öffne die <a href='https://replit.com/languages/python3' target='_blank' class='text-purple-600 underline'>Python Sandbox</a>.</p><p>2. Lerne `Variables`, `Loops`, und `If` Abfragen kennen.</p><p>3. Aufgabe: Baue einen Taschenrechner!</p>",
                 d5_h4: "Tag 5: Veröffentlichung & Review",
                 d5_sub: "Deine Projekte im echten Web veröffentlichen.",
                 await: "Warten auf Freischaltung",
                 statusTitle: "Mentor Status",
                 sd1: "Tag 1: Hardware",
                 sd2: "Tag 2: OS/Netz",
-                sd3: "Tag 3: Web Dev",
+                sd3: "Tag 3: KI Intro",
                 sd4: "Tag 4: Python",
                 sd5: "Tag 5: Review",
                 sd_done: "✓ ERLEDIGT",
@@ -416,17 +426,23 @@
                 labTitle: "Luis' Labor",
                 toast: "Mentor autorisiert! Nächster Tag freigeschaltet.",
                 prompt: "Mentor-Passwort zum Freischalten eingeben:",
-                error: "Falsches Passwort. Zugriff verweigert."
+                error: "Falsches Passwort. Zugriff verweigert.",
+                progress: {
+                    1: "AKTUELLER STAND: HARDWARE BEREIT",
+                    2: "AKTUELLER STAND: HARDWARE BEREIT",
+                    3: "AKTUELLER STAND: OS & NETZWERK BEREIT",
+                    4: "AKTUELLER STAND: KI-KONZEPTE ERKUNDET",
+                    5: "AKTUELLER STAND: PYTHON-LOGIK GEMEISTERT",
+                    6: "AKTUELLER STAND: WOCHE ABGESCHLOSSEN!"
+                }
             }
         };
 
-        // Utility to safely set innerText
         function safeSetText(id, value) {
             const el = document.getElementById(id);
             if (el) el.innerText = value;
         }
 
-        // Utility to safely set innerHTML
         function safeSetHTML(id, value) {
             const el = document.getElementById(id);
             if (el) el.innerHTML = value;
@@ -436,32 +452,27 @@
             currentLang = lang;
             const t = text[lang];
 
-            // Update Global UI
             safeSetText('nav-title', t.nav);
             safeSetText('mentor-btn-text', t.mentor);
-            safeSetText('progress-badge', t.badge);
+            safeSetText('progress-badge', t.progress[unlockedDay]);
             safeSetText('welcome-hello', t.hello);
             safeSetText('welcome-p', t.intro);
             safeSetText('roadmap-h2', t.tasks);
 
-            // Update Roadmap Days
             safeSetText('day1-h4', t.d1_h4);
             safeSetText('day1-p', t.d1_p);
 
             safeSetText('day2-h4', t.d2_h4);
             safeSetText('day2-sub', t.d2_sub);
-            safeSetText('d2-t1-title', t.d2_t1);
-            safeSetHTML('d2-t1-steps', t.d2_t1_steps);
-            safeSetText('d2-t2-title', t.d2_t2);
-            safeSetHTML('d2-t2-steps', t.d2_t2_steps);
-            safeSetText('d2-t2-link', t.d2_t2_link);
-            safeSetText('d2-t3-title', t.d2_t3);
-            safeSetHTML('d2-t3-steps', t.d2_t3_steps);
-            safeSetText('d2-t3-link', t.d2_t3_link);
 
             safeSetText('day3-h4', t.d3_h4);
+            safeSetText('day3-sub', t.d3_sub);
             safeSetText('d3-t1-title', t.d3_t1);
             safeSetHTML('d3-t1-steps', t.d3_t1_steps);
+            safeSetText('d3-t2-title', t.d3_t2);
+            safeSetHTML('d3-t2-steps', t.d3_t2_steps);
+            safeSetText('d3-t3-title', t.d3_t3);
+            safeSetHTML('d3-t3-steps', t.d3_t3_steps);
 
             safeSetText('day4-h4', t.d4_h4);
             safeSetText('d4-t1-title', t.d4_t1);
@@ -470,42 +481,27 @@
             safeSetText('day5-h4', t.d5_h4);
             safeSetText('day5-sub', t.d5_sub);
 
-            // Update Locked Text
-            for(let i=3; i<=5; i++) {
+            for(let i=4; i<=5; i++) {
                 safeSetText(`lock-text-${i}`, t.await);
             }
 
-            // Update Sidebar Mentor Status
             safeSetText('side-mentor-title', t.statusTitle);
-            
-            // Day 1
             safeSetText('side-d1-text', t.sd1);
             safeSetText('side-d1-status', t.sd_done);
             
-            // Handle Sidebar Days based on unlock status
-            // We iterate through all days to ensure they update regardless of innerHTML replacement
             for (let i = 2; i <= 5; i++) {
-                const textId = `side-d${i}-text`;
-                const statusId = `side-d${i}-status`;
                 const parentId = `side-${i}`;
-                
-                const textEl = document.getElementById(textId);
-                const statusEl = document.getElementById(statusId);
-                
-                if (textEl && statusEl) {
-                    textEl.innerText = t[`sd${i}`];
-                    statusEl.innerText = t.sd_active;
-                } else if (unlockedDay >= i) {
-                    // If the specific span IDs are gone (replaced by innerHTML), update the parent container
-                    const parentEl = document.getElementById(parentId);
-                    if (parentEl) {
+                const parentEl = document.getElementById(parentId);
+                if (parentEl) {
+                    if (unlockedDay > i) {
+                        parentEl.innerHTML = `<span class="text-slate-400 line-through">${t[`sd${i}`]}</span> <span class="text-green-400 font-bold">${t.sd_done}</span>`;
+                        parentEl.classList.remove('opacity-40');
+                    } else if (unlockedDay === i) {
                         parentEl.innerHTML = `<span class="text-slate-200">${t[`sd${i}`]}</span> <span class="text-indigo-400 font-bold">${t.sd_active}</span>`;
-                    }
-                } else {
-                    // Still locked
-                    const parentEl = document.getElementById(parentId);
-                    if (parentEl) {
-                        parentEl.innerHTML = `<span class="text-slate-400 italic">${t[`sd${i}`]}</span> <i class="fas fa-lock"></i>`;
+                        parentEl.classList.remove('opacity-40');
+                    } else {
+                        parentEl.innerHTML = `<span class="text-slate-400 italic">${t[`sd${i}`]}</span> <i class="fas fa-lock text-slate-600"></i>`;
+                        parentEl.classList.add('opacity-40');
                     }
                 }
             }
@@ -513,17 +509,10 @@
             safeSetText('side-lab-title', t.labTitle);
             safeSetText('toast', t.toast);
 
-            // Toggle Visuals for Buttons
             const btnEn = document.getElementById('lang-en');
             const btnDe = document.getElementById('lang-de');
-            if (btnEn) {
-                btnEn.classList.toggle('lang-active', lang === 'en');
-                btnEn.classList.toggle('text-slate-500', lang !== 'en');
-            }
-            if (btnDe) {
-                btnDe.classList.toggle('lang-active', lang === 'de');
-                btnDe.classList.toggle('text-slate-500', lang !== 'de');
-            }
+            if (btnEn) btnEn.classList.toggle('lang-active', lang === 'en');
+            if (btnDe) btnDe.classList.toggle('lang-active', lang === 'de');
         }
 
         function requestUnlock() {
@@ -537,20 +526,32 @@
         }
 
         function unlockNextDay() {
-            if (unlockedDay >= 5) return;
+            if (unlockedDay > 5) return;
+
+            const finishedDayId = `content-${unlockedDay}`;
+            const finishedCard = document.getElementById(finishedDayId);
+            if (finishedCard) {
+                finishedCard.classList.add('completed-day-card');
+                finishedCard.classList.remove('shadow-md');
+            }
+            
+            const finishedIcon = document.getElementById(`icon-${unlockedDay}`);
+            if (finishedIcon) {
+                finishedIcon.className = "absolute left-0 top-1 w-6 h-6 rounded-full bg-green-500 z-10 flex items-center justify-center shadow-lg shadow-green-200";
+                finishedIcon.innerHTML = `<i class="fas fa-check text-white text-[10px]"></i>`;
+            }
+            
+            const finishedLine = document.getElementById(`line-${unlockedDay}`);
+            if (finishedLine) finishedLine.className = "step-line absolute left-[11px] top-6 bottom-0 w-0.5 bg-green-200";
+
             unlockedDay++;
             
-            const content = document.getElementById(`content-${unlockedDay}`);
+            const nextContent = document.getElementById(`content-${unlockedDay}`);
             const overlay = document.getElementById(`lock-overlay-${unlockedDay}`);
-            if (content) content.classList.remove('locked-day');
+            if (nextContent) nextContent.classList.remove('locked-day');
             if (overlay) overlay.style.display = 'none';
 
-            const t = text[currentLang];
-            const sideItem = document.getElementById(`side-${unlockedDay}`);
-            if (sideItem) {
-                sideItem.classList.remove('opacity-40');
-                sideItem.innerHTML = `<span class="text-slate-200">${t[`sd${unlockedDay}`]}</span> <span class="text-indigo-400 font-bold">${t.sd_active}</span>`;
-            }
+            changeLanguage(currentLang);
 
             const toast = document.getElementById("toast");
             if (toast) {
@@ -561,6 +562,8 @@
             const dayEl = document.getElementById(`day-${unlockedDay}`);
             if (dayEl) dayEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
+
+        window.onload = () => changeLanguage('en');
     </script>
 </body>
 </html>
