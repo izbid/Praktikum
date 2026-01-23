@@ -20,36 +20,43 @@
         .step-item:last-child .step-line {
             display: none;
         }
-        .locked-day {
-            filter: blur(8px);
-            pointer-events: none;
-            opacity: 0.5;
-            user-select: none;
+        
+        /* Focus Logic Styles */
+        .roadmap-container {
+            transition: all 0.6s ease;
         }
-        /* Global Focus Blur */
-        .focus-blur {
+
+        /* When focused, blur everything that is NOT active */
+        .focus-active .day-container:not(.active-focus) {
             filter: blur(16px) grayscale(90%);
             pointer-events: none;
-            opacity: 0.3;
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0.2;
         }
-        /* Completed Day Styling - Modified to be toggleable */
-        .completed-day-card {
-            filter: blur(1.5px) grayscale(20%);
-            opacity: 0.8;
-            transition: all 0.5s ease;
-        }
-        /* When focus is unlocked, we want them to look exactly like Day 5 */
-        .unlocked-focus .completed-day-card {
-            filter: none !important;
-            opacity: 1 !important;
-            grayscale: 0% !important;
-        }
-        
+
         .day-container {
-            transition: all 0.5s ease;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
         }
+
+        .active-focus {
+            transform: scale(1.02);
+            z-index: 10;
+        }
+
+        /* Completed Day Styling */
+        .completed-day-card {
+            filter: blur(0.5px) grayscale(10%);
+            opacity: 0.9;
+        }
+        
+        /* Override blur when mentor unlocks focus mode */
+        .unlocked-focus .day-container {
+            filter: none !important;
+            opacity: 1 !important;
+            pointer-events: auto !important;
+            transform: none !important;
+        }
+
         details summary::-webkit-details-marker {
             display: none;
         }
@@ -103,11 +110,12 @@
     <!-- Header -->
     <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
         <div class="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center gap-2">
-                <div class="bg-indigo-600 text-white p-2 rounded-lg shadow-md">
+            <!-- Clickable Logo/Home Button -->
+            <div class="flex items-center gap-2 cursor-pointer group select-none" onclick="goHome()">
+                <div class="bg-indigo-600 text-white p-2 rounded-lg shadow-md group-hover:bg-indigo-700 transition-colors">
                     <i class="fas fa-network-wired"></i>
                 </div>
-                <span class="font-bold text-xl tracking-tight uppercase" id="nav-title">Your IT Journey</span>
+                <span class="font-bold text-xl tracking-tight uppercase group-hover:text-indigo-600 transition-colors" id="nav-title">Your IT Journey</span>
             </div>
             
             <div class="flex items-center gap-4">
@@ -141,7 +149,7 @@
                     <span id="welcome-hello">Welcome,</span> <span class="gradient-text">Luis!</span>
                 </h1>
                 <p class="text-lg text-slate-600 max-w-2xl leading-relaxed" id="welcome-p">
-                    Congratulations on reaching the final stage. Below is your roadmap. Your mentor has focused the view on Day 5, but can unlock the full history for your review.
+                    Congratulations on reaching the final stage. Below is your roadmap. Select a day to focus on its specific tasks.
                 </p>
             </section>
 
@@ -154,169 +162,166 @@
                         <span id="roadmap-h2">Daily Tasks & Steps</span>
                     </h2>
 
-                    <div id="roadmap">
-                        <!-- PREVIOUS DAYS (Blur targets) -->
-                        <div id="blur-container" class="space-y-2">
-                            <!-- Day 1 -->
-                            <div class="relative pl-8 pb-10 step-item day-container" id="day-1" onclick="handleDayClick(1)">
-                                <div class="step-line absolute left-[11px] top-6 bottom-0 w-0.5 bg-green-200"></div>
-                                <div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-green-500 z-10 flex items-center justify-center shadow-lg shadow-green-200">
-                                    <i class="fas fa-check text-white text-[10px]"></i>
+                    <div id="roadmap" class="roadmap-container space-y-2">
+                        <!-- Day 1 -->
+                        <div class="relative pl-8 pb-10 step-item day-container" id="day-1" onclick="handleDayClick(1)">
+                            <div class="step-line absolute left-[11px] top-6 bottom-0 w-0.5 bg-green-200"></div>
+                            <div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-green-500 z-10 flex items-center justify-center shadow-lg shadow-green-200">
+                                <i class="fas fa-check text-white text-[10px]"></i>
+                            </div>
+                            <div class="bg-white p-2 rounded-2xl border border-green-100 shadow-sm completed-day-card">
+                                <div class="p-4 border-b border-slate-50">
+                                    <h4 class="font-bold text-lg text-green-800" id="day1-h4">Day 1: Physical Infrastructure</h4>
+                                    <p class="text-slate-500 text-xs" id="day1-sub">Task Complete: PC Assembly & Components.</p>
                                 </div>
-                                <div class="bg-white p-2 rounded-2xl border border-green-100 shadow-sm completed-day-card">
-                                    <div class="p-4 border-b border-slate-50">
-                                        <h4 class="font-bold text-lg text-green-800" id="day1-h4">Day 1: Physical Infrastructure</h4>
-                                        <p class="text-slate-500 text-xs" id="day1-sub">Task Complete: PC Assembly & Components.</p>
-                                    </div>
-                                    <div class="divide-y divide-slate-50">
-                                        <details class="group">
-                                            <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 transition-colors">
-                                                <span class="text-sm font-semibold text-slate-700 flex items-center gap-3">
-                                                    <i class="fas fa-chevron-right text-[10px] text-slate-400 transition-transform"></i>
-                                                    <span id="d1-t1-title">Session 1: Visual Learning (German)</span>
-                                                </span>
-                                            </summary>
-                                            <div class="px-11 pb-6 pt-2 space-y-3 text-xs text-slate-600" id="d1-t1-steps">
-                                                <p>Learn how hardware works in this fun video:</p>
-                                                <a href="https://www.youtube.com/watch?v=R9E-Ere99f0" target="_blank" class="text-blue-600 font-bold underline">Wie funktioniert ein Computer? (Simpleclub)</a>
-                                            </div>
-                                        </details>
-                                        <details class="group">
-                                            <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 transition-colors">
-                                                <span class="text-sm font-semibold text-slate-700 flex items-center gap-3">
-                                                    <i class="fas fa-chevron-right text-[10px] text-slate-400 transition-transform"></i>
-                                                    <span id="d1-t2-title">Session 2: Practical PC Building</span>
-                                                </span>
-                                            </summary>
-                                            <div class="px-11 pb-6 pt-2 text-xs text-slate-600" id="d1-t2-steps">
-                                                Hands-on: Assembling CPU, RAM, and storage on the motherboard.
-                                            </div>
-                                        </details>
-                                    </div>
+                                <div class="divide-y divide-slate-50">
+                                    <details class="group">
+                                        <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 transition-colors">
+                                            <span class="text-sm font-semibold text-slate-700 flex items-center gap-3">
+                                                <i class="fas fa-chevron-right text-[10px] text-slate-400 transition-transform"></i>
+                                                <span id="d1-t1-title">Session 1: Visual Learning (German)</span>
+                                            </span>
+                                        </summary>
+                                        <div class="px-11 pb-6 pt-2 space-y-3 text-xs text-slate-600" id="d1-t1-steps" onclick="event.stopPropagation()">
+                                            <p>Learn how hardware works in this fun video:</p>
+                                            <a href="https://www.youtube.com/watch?v=R9E-Ere99f0" target="_blank" class="text-blue-600 font-bold underline">Wie funktioniert ein Computer? (Simpleclub)</a>
+                                        </div>
+                                    </details>
+                                    <details class="group">
+                                        <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 transition-colors">
+                                            <span class="text-sm font-semibold text-slate-700 flex items-center gap-3">
+                                                <i class="fas fa-chevron-right text-[10px] text-slate-400 transition-transform"></i>
+                                                <span id="d1-t2-title">Session 2: Practical PC Building</span>
+                                            </span>
+                                        </summary>
+                                        <div class="px-11 pb-6 pt-2 text-xs text-slate-600" id="d1-t2-steps" onclick="event.stopPropagation()">
+                                            Hands-on: Assembling CPU, RAM, and storage on the motherboard.
+                                        </div>
+                                    </details>
                                 </div>
                             </div>
+                        </div>
 
-                            <!-- Day 2 -->
-                            <div class="relative pl-8 pb-10 step-item day-container" id="day-2" onclick="handleDayClick(2)">
-                                <div class="step-line absolute left-[11px] top-6 bottom-0 w-0.5 bg-green-200"></div>
-                                <div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-green-500 z-10 flex items-center justify-center shadow-lg shadow-green-200">
-                                    <i class="fas fa-check text-white text-[10px]"></i>
+                        <!-- Day 2 -->
+                        <div class="relative pl-8 pb-10 step-item day-container" id="day-2" onclick="handleDayClick(2)">
+                            <div class="step-line absolute left-[11px] top-6 bottom-0 w-0.5 bg-green-200"></div>
+                            <div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-green-500 z-10 flex items-center justify-center shadow-lg shadow-green-200">
+                                <i class="fas fa-check text-white text-[10px]"></i>
+                            </div>
+                            <div class="bg-white p-2 rounded-2xl border border-blue-100 shadow-sm completed-day-card">
+                                <div class="p-4 border-b border-slate-50">
+                                    <h4 class="font-bold text-lg text-blue-800" id="day2-h4">Day 2: OS Installation</h4>
+                                    <p class="text-slate-500 text-xs" id="day2-sub">Software Focus: Environment Setup.</p>
                                 </div>
-                                <div class="bg-white p-2 rounded-2xl border border-blue-100 shadow-sm completed-day-card">
-                                    <div class="p-4 border-b border-slate-50">
-                                        <h4 class="font-bold text-lg text-blue-800" id="day2-h4">Day 2: OS Installation</h4>
-                                        <p class="text-slate-500 text-xs" id="day2-sub">Software Focus: Environment Setup.</p>
-                                    </div>
-                                    <div class="divide-y divide-slate-50">
-                                        <details class="group">
-                                            <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 transition-colors">
-                                                <span class="text-sm font-semibold text-slate-700 flex items-center gap-3">
-                                                    <i class="fas fa-chevron-right text-[10px] text-slate-400 transition-transform"></i>
-                                                    <span id="d2-t1-title">Session 1: OS Concepts (German)</span>
-                                                </span>
-                                            </summary>
-                                            <div class="px-11 pb-6 pt-2 space-y-3 text-xs text-slate-600" id="d2-t1-steps">
-                                                <p>Quick guide to what an OS actually does:</p>
-                                                <a href="https://www.youtube.com/watch?v=M5K3t99SInA" target="_blank" class="text-blue-600 font-bold underline">Was ist ein Betriebssystem? (Wissen2Go)</a>
-                                            </div>
-                                        </details>
-                                        <details class="group">
-                                            <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 transition-colors">
-                                                <span class="text-sm font-semibold text-slate-700 flex items-center gap-3">
-                                                    <i class="fas fa-chevron-right text-[10px] text-slate-400 transition-transform"></i>
-                                                    <span id="d2-t2-title">Session 2: Hands-on Installation</span>
-                                                </span>
-                                            </summary>
-                                            <div class="px-11 pb-6 pt-2 text-xs text-slate-600" id="d2-t2-steps">
-                                                Installing Windows 11 via bootable USB and setting up user profiles.
-                                            </div>
-                                        </details>
-                                    </div>
+                                <div class="divide-y divide-slate-50">
+                                    <details class="group">
+                                        <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 transition-colors">
+                                            <span class="text-sm font-semibold text-slate-700 flex items-center gap-3">
+                                                <i class="fas fa-chevron-right text-[10px] text-slate-400 transition-transform"></i>
+                                                <span id="d2-t1-title">Session 1: OS Concepts (German)</span>
+                                            </span>
+                                        </summary>
+                                        <div class="px-11 pb-6 pt-2 space-y-3 text-xs text-slate-600" id="d2-t1-steps" onclick="event.stopPropagation()">
+                                            <p>Quick guide to what an OS actually does:</p>
+                                            <a href="https://www.youtube.com/watch?v=M5K3t99SInA" target="_blank" class="text-blue-600 font-bold underline">Was ist ein Betriebssystem? (Wissen2Go)</a>
+                                        </div>
+                                    </details>
+                                    <details class="group">
+                                        <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 transition-colors">
+                                            <span class="text-sm font-semibold text-slate-700 flex items-center gap-3">
+                                                <i class="fas fa-chevron-right text-[10px] text-slate-400 transition-transform"></i>
+                                                <span id="d2-t2-title">Session 2: Hands-on Installation</span>
+                                            </span>
+                                        </summary>
+                                        <div class="px-11 pb-6 pt-2 text-xs text-slate-600" id="d2-t2-steps" onclick="event.stopPropagation()">
+                                            Installing Windows 11 via bootable USB and setting up user profiles.
+                                        </div>
+                                    </details>
                                 </div>
                             </div>
+                        </div>
 
-                            <!-- Day 3 -->
-                            <div class="relative pl-8 pb-10 step-item day-container" id="day-3" onclick="handleDayClick(3)">
-                                <div class="step-line absolute left-[11px] top-6 bottom-0 w-0.5 bg-green-200"></div>
-                                <div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-green-500 z-10 flex items-center justify-center shadow-lg shadow-green-200">
-                                    <i class="fas fa-check text-white text-[10px]"></i>
+                        <!-- Day 3 -->
+                        <div class="relative pl-8 pb-10 step-item day-container" id="day-3" onclick="handleDayClick(3)">
+                            <div class="step-line absolute left-[11px] top-6 bottom-0 w-0.5 bg-green-200"></div>
+                            <div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-green-500 z-10 flex items-center justify-center shadow-lg shadow-green-200">
+                                <i class="fas fa-check text-white text-[10px]"></i>
+                            </div>
+                            <div class="bg-white p-2 rounded-2xl border border-blue-100 shadow-sm completed-day-card">
+                                <div class="p-4 border-b border-slate-50">
+                                    <h4 class="font-bold text-lg text-blue-800" id="day3-h4">Day 3: Basics of Networking</h4>
+                                    <p class="text-slate-500 text-xs" id="day3-sub">Infrastructure Focus: Connectivity.</p>
                                 </div>
-                                <div class="bg-white p-2 rounded-2xl border border-blue-100 shadow-sm completed-day-card">
-                                    <div class="p-4 border-b border-slate-50">
-                                        <h4 class="font-bold text-lg text-blue-800" id="day3-h4">Day 3: Basics of Networking</h4>
-                                        <p class="text-slate-500 text-xs" id="day3-sub">Infrastructure Focus: Connectivity.</p>
-                                    </div>
-                                    <div class="divide-y divide-slate-50">
-                                        <details class="group">
-                                            <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 transition-colors">
-                                                <span class="text-sm font-semibold text-slate-700 flex items-center gap-3">
-                                                    <i class="fas fa-chevron-right text-[10px] text-slate-400 transition-transform"></i>
-                                                    <span id="d3-t1-title">Session 1: Visual Learning</span>
-                                                </span>
-                                            </summary>
-                                            <div class="px-11 pb-6 pt-2 space-y-3 text-xs text-slate-600">
-                                                <ol class="list-decimal space-y-2">
-                                                    <li><a href="https://www.youtube.com/watch?v=YZ3TMkOE8LY" target="_blank" class="text-blue-600 underline">Introduction to Networking</a></li>
-                                                    <li><a href="https://www.youtube.com/watch?v=tSodBEAJz9Y" target="_blank" class="text-blue-600 underline">How the Internet Works</a></li>
-                                                </ol>
-                                            </div>
-                                        </details>
-                                        <details class="group">
-                                            <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 transition-colors">
-                                                <span class="text-sm font-semibold text-slate-700 flex items-center gap-3">
-                                                    <i class="fas fa-chevron-right text-[10px] text-slate-400 transition-transform"></i>
-                                                    <span id="d3-t2-title">Session 2: Simulation</span>
-                                                </span>
-                                            </summary>
-                                            <div class="px-11 pb-6 pt-2 text-xs text-slate-600">
-                                                <a href="https://netsim.erinn.io/" target="_blank" class="text-blue-600 underline font-bold">Netsim Simulation Tool</a>
-                                            </div>
-                                        </details>
-                                    </div>
+                                <div class="divide-y divide-slate-50">
+                                    <details class="group">
+                                        <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 transition-colors">
+                                            <span class="text-sm font-semibold text-slate-700 flex items-center gap-3">
+                                                <i class="fas fa-chevron-right text-[10px] text-slate-400 transition-transform"></i>
+                                                <span id="d3-t1-title">Session 1: Visual Learning</span>
+                                            </span>
+                                        </summary>
+                                        <div class="px-11 pb-6 pt-2 space-y-3 text-xs text-slate-600" onclick="event.stopPropagation()">
+                                            <ol class="list-decimal space-y-2">
+                                                <li><a href="https://www.youtube.com/watch?v=YZ3TMkOE8LY" target="_blank" class="text-blue-600 underline">Introduction to Networking</a></li>
+                                                <li><a href="https://www.youtube.com/watch?v=tSodBEAJz9Y" target="_blank" class="text-blue-600 underline">How the Internet Works</a></li>
+                                            </ol>
+                                        </div>
+                                    </details>
+                                    <details class="group">
+                                        <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 transition-colors">
+                                            <span class="text-sm font-semibold text-slate-700 flex items-center gap-3">
+                                                <i class="fas fa-chevron-right text-[10px] text-slate-400 transition-transform"></i>
+                                                <span id="d3-t2-title">Session 2: Simulation</span>
+                                            </span>
+                                        </summary>
+                                        <div class="px-11 pb-6 pt-2 text-xs text-slate-600" onclick="event.stopPropagation()">
+                                            <a href="https://netsim.erinn.io/" target="_blank" class="text-blue-600 underline font-bold">Netsim Simulation Tool</a>
+                                        </div>
+                                    </details>
                                 </div>
                             </div>
+                        </div>
 
-                            <!-- Day 4 -->
-                            <div class="relative pl-8 pb-10 step-item day-container" id="day-4" onclick="handleDayClick(4)">
-                                <div class="step-line absolute left-[11px] top-6 bottom-0 w-0.5 bg-green-200"></div>
-                                <div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-green-500 z-10 flex items-center justify-center shadow-lg shadow-green-200">
-                                    <i class="fas fa-check text-white text-[10px]"></i>
+                        <!-- Day 4 -->
+                        <div class="relative pl-8 pb-10 step-item day-container" id="day-4" onclick="handleDayClick(4)">
+                            <div class="step-line absolute left-[11px] top-6 bottom-0 w-0.5 bg-green-200"></div>
+                            <div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-green-500 z-10 flex items-center justify-center shadow-lg shadow-green-200">
+                                <i class="fas fa-check text-white text-[10px]"></i>
+                            </div>
+                            <div class="bg-white p-2 rounded-2xl border border-purple-100 shadow-sm completed-day-card">
+                                <div class="p-4 border-b border-slate-50">
+                                    <h4 class="font-bold text-lg text-purple-800" id="day4-h4">Day 4: AI in Practice</h4>
+                                    <p class="text-slate-500 text-xs" id="day4-sub">Machine Learning Intro.</p>
                                 </div>
-                                <div class="bg-white p-2 rounded-2xl border border-purple-100 shadow-sm completed-day-card">
-                                    <div class="p-4 border-b border-slate-50">
-                                        <h4 class="font-bold text-lg text-purple-800" id="day4-h4">Day 4: AI in Practice</h4>
-                                        <p class="text-slate-500 text-xs" id="day4-sub">Machine Learning Intro.</p>
-                                    </div>
-                                    <div class="divide-y divide-slate-50">
-                                        <details class="group">
-                                            <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 transition-colors">
-                                                <span class="text-sm font-semibold text-slate-700 flex items-center gap-3">
-                                                    <i class="fas fa-chevron-right text-[10px] text-slate-400 transition-transform"></i>
-                                                    <span id="d4-t1-title">Session 1: AI Learning</span>
-                                                </span>
-                                            </summary>
-                                            <div class="px-11 pb-6 pt-2 space-y-3 text-xs text-slate-600">
-                                                <ol class="list-decimal space-y-2">
-                                                    <li><a href="https://www.youtube.com/watch?v=ttIOdAdQaUE" target="_blank" class="text-blue-600 underline">What is AI? (Intro)</a></li>
-                                                    <li><a href="https://www.youtube.com/watch?v=_80pKGuyKWc" target="_blank" class="text-blue-600 underline">AI Overview</a></li>
-                                                    <li><a href="https://www.youtube.com/watch?v=ad79nYk2keg" target="_blank" class="text-blue-600 underline">How AI Works</a></li>
-                                                    <li><a href="https://www.youtube.com/watch?v=sDt5bTQBJis" target="_blank" class="text-blue-600 underline">AI in 5 Minutes</a></li>
-                                                    <li><a href="https://www.youtube.com/watch?v=osCuFoSMzZk" target="_blank" class="text-blue-600 underline">Machine Learning</a></li>
-                                                </ol>
-                                            </div>
-                                        </details>
-                                        <details class="group">
-                                            <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 transition-colors">
-                                                <span class="text-sm font-semibold text-slate-700 flex items-center gap-3">
-                                                    <i class="fas fa-chevron-right text-[10px] text-slate-400 transition-transform"></i>
-                                                    <span id="d4-t2-title">Session 2: ML Simulator</span>
-                                                </span>
-                                            </summary>
-                                            <div class="px-11 pb-6 pt-2 text-xs text-slate-600">
-                                                <a href="https://machinelearningforkids.co.uk/" target="_blank" class="text-purple-600 underline font-bold">ML for Kids</a>
-                                            </div>
-                                        </details>
-                                    </div>
+                                <div class="divide-y divide-slate-50">
+                                    <details class="group">
+                                        <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 transition-colors">
+                                            <span class="text-sm font-semibold text-slate-700 flex items-center gap-3">
+                                                <i class="fas fa-chevron-right text-[10px] text-slate-400 transition-transform"></i>
+                                                <span id="d4-t1-title">Session 1: AI Learning</span>
+                                            </span>
+                                        </summary>
+                                        <div class="px-11 pb-6 pt-2 space-y-3 text-xs text-slate-600" onclick="event.stopPropagation()">
+                                            <ol class="list-decimal space-y-2">
+                                                <li><a href="https://www.youtube.com/watch?v=ttIOdAdQaUE" target="_blank" class="text-blue-600 underline">What is AI? (Intro)</a></li>
+                                                <li><a href="https://www.youtube.com/watch?v=_80pKGuyKWc" target="_blank" class="text-blue-600 underline">AI Overview</a></li>
+                                                <li><a href="https://www.youtube.com/watch?v=ad79nYk2keg" target="_blank" class="text-blue-600 underline">How AI Works</a></li>
+                                                <li><a href="https://www.youtube.com/watch?v=sDt5bTQBJis" target="_blank" class="text-blue-600 underline">AI in 5 Minutes</a></li>
+                                                <li><a href="https://www.youtube.com/watch?v=osCuFoSMzZk" target="_blank" class="text-blue-600 underline">Machine Learning</a></li>
+                                            </ol>
+                                        </div>
+                                    </details>
+                                    <details class="group">
+                                        <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 transition-colors">
+                                            <span class="text-sm font-semibold text-slate-700 flex items-center gap-3">
+                                                <i class="fas fa-chevron-right text-[10px] text-slate-400 transition-transform"></i>
+                                                <span id="d4-t2-title">Session 2: ML Simulator</span>
+                                            </span>
+                                        </summary>
+                                        <div class="px-11 pb-6 pt-2 text-xs text-slate-600" onclick="event.stopPropagation()">
+                                            <a href="https://machinelearningforkids.co.uk/" target="_blank" class="text-purple-600 underline font-bold">ML for Kids</a>
+                                        </div>
+                                    </details>
                                 </div>
                             </div>
                         </div>
@@ -408,10 +413,11 @@
     <script>
         // State variables
         let currentLang = 'en';
-        let isFocusMode = false; // Default false as requested
+        let isFocusMode = false; // Roadmap focus state
+        let activeDayId = null; // The day currently in focus
         let isAuthorized = false;
-        let currentView = 'roadmap'; // 'roadmap' or 'exam'
-        let examProgress = 'review'; // 'review', 'questions', or 'results'
+        let currentView = 'roadmap';
+        let examProgress = 'review';
         let userAnswers = {};
         const mentorSecret = "admin";
 
@@ -448,7 +454,7 @@
                     { id: 22, cat: "Networking", q: "Which cable for wired router?", options: ["HDMI", "USB", "Ethernet", "Power"], correct: 2, expl: "Physical network links." },
                     { id: 23, cat: "Networking", q: "Main function of a Router?", options: ["Storage", "Routes between networks", "Type docs", "Cooling"], correct: 1, expl: "Directs traffic between networks." },
                     { id: 24, cat: "AI", q: "What teaches computer in ML?", options: ["Cables", "Data", "Keys", "Power"], correct: 1, expl: "Relies on patterns in data." },
-                    { id: 25, cat: "AI", q: "What is 'Bias'?", options: ["Speed", "Unfair results", "Color", "Virus"], correct: 1, expl: "Prejudice in AI output." },
+                    { id: 25, cat: "AI", q: "What is 'Bias'?", options: ["High speed", "Unfair results", "Color", "Virus"], correct: 1, expl: "Prejudice in AI output." },
                     { id: 26, cat: "AI", q: "Confidence Score?", options: ["Speed", "Certainty", "Signal", "Battery"], correct: 1, expl: "Measures prediction probability." },
                     { id: 27, cat: "AI", q: "Why use 'Buckets'?", options: ["Water", "Categorize data", "Cooling", "Deleting"], correct: 1, expl: "Labels for learning." },
                     { id: 28, cat: "AI", q: "Ethical consideration?", options: ["Price", "Impact on lives", "Size", "RAM"], correct: 1, expl: "Considers safety/fairness." },
@@ -535,7 +541,7 @@
                 nav: "Your IT Journey",
                 mentor: "Mentor Auth",
                 hello: "Welcome,",
-                intro: "Congratulations on reaching the final stage. Below is your roadmap. Your mentor has focused the view on Day 5, but can unlock the full history for your review.",
+                intro: "Congratulations on reaching the final stage. Below is your roadmap. Select a day to focus on its specific tasks.",
                 tasks: "Daily Tasks & Steps",
                 d1_h4: "Day 1: Hardware",
                 d1_sub: "Task Complete: PC Assembly & Components.",
@@ -558,7 +564,7 @@
                 nav: "Deine IT-Reise",
                 mentor: "Mentor Freischaltung",
                 hello: "Willkommen,",
-                intro: "Herzlichen Glückwunsch zum Erreichen der Endphase. Unten findest du deine Roadmap. Dein Mentor hat den Fokus auf Tag 5 gelegt, kann aber den gesamten Verlauf zur Durchsicht freischalten.",
+                intro: "Herzlichen Glückwunsch zum Erreichen der Endphase. Unten findest du deine Roadmap. Wähle einen Tag aus, um dich auf seine spezifischen Aufgaben zu konzentrieren.",
                 tasks: "Tägliche Aufgaben & Schritte",
                 d1_h4: "Tag 1: Hardware",
                 d1_sub: "Aufgabe erledigt: PC-Montage & Komponenten.",
@@ -585,6 +591,7 @@
             const state = {
                 currentLang,
                 isFocusMode,
+                activeDayId,
                 isAuthorized,
                 currentView,
                 examProgress,
@@ -599,6 +606,7 @@
                 const state = JSON.parse(saved);
                 currentLang = state.currentLang || 'en';
                 isFocusMode = state.isFocusMode || false;
+                activeDayId = state.activeDayId || null;
                 isAuthorized = state.isAuthorized || false;
                 currentView = state.currentView || 'roadmap';
                 examProgress = state.examProgress || 'review';
@@ -606,30 +614,59 @@
             }
         }
 
-        function handleDayClick(day) {
-            // "Blurring should only take effect when one click a day's tasks"
-            if (!isFocusMode) {
-                toggleBlurEffect();
-            }
-            // Logic to focus the clicked day can be added here if needed
-            // Currently it just activates focus mode globally for the roadmap
+        /**
+         * Resets the application state to the home roadmap and reloads the page.
+         */
+        function goHome() {
+            isFocusMode = false;
+            activeDayId = null;
+            currentView = 'roadmap';
+            saveState();
+            window.location.reload();
         }
 
-        function toggleBlurEffect() {
-            isFocusMode = !isFocusMode;
-            applyBlurState();
+        function handleDayClick(day) {
+            // When one clicks a day's tasks, that day becomes active and others blur.
+            if (activeDayId === day && isFocusMode) {
+                // If clicking the already active day, we stay in focus mode.
+                return;
+            }
+            
+            isFocusMode = true;
+            activeDayId = day;
+            applyFocusState();
             saveState();
         }
 
-        function applyBlurState() {
-            const container = document.getElementById('blur-container');
+        function toggleBlurEffect() {
+            // Mentor's Unlock Focus clears the effect entirely
+            isFocusMode = !isFocusMode;
+            if (!isFocusMode) {
+                activeDayId = null;
+            } else {
+                // If re-enabling focus via button without a day selected, focus Day 5
+                if (!activeDayId) activeDayId = 5;
+            }
+            applyFocusState();
+            saveState();
+        }
+
+        function applyFocusState() {
+            const roadmap = document.getElementById('roadmap');
             const mainBody = document.getElementById('main-content');
             
-            if (isFocusMode) {
-                container.classList.add('focus-blur');
+            // Remove active classes from all days first
+            document.querySelectorAll('.day-container').forEach(el => {
+                el.classList.remove('active-focus');
+            });
+
+            if (isFocusMode && activeDayId) {
+                roadmap.classList.add('focus-active');
                 mainBody.classList.remove('unlocked-focus');
+                const activeEl = document.getElementById(`day-${activeDayId}`);
+                if (activeEl) activeEl.classList.add('active-focus');
             } else {
-                container.classList.remove('focus-blur');
+                roadmap.classList.remove('focus-active');
                 mainBody.classList.add('unlocked-focus');
             }
             updateToggleBtnText();
@@ -736,8 +773,8 @@
         }
 
         function renderView() {
-            const roadmap = document.getElementById('roadmap-view');
-            const exam = document.getElementById('exam-view');
+            const roadmapView = document.getElementById('roadmap-view');
+            const examView = document.getElementById('exam-view');
             const mentorBtn = document.getElementById('toggle-blur-btn');
 
             if (isAuthorized) {
@@ -745,14 +782,14 @@
             }
 
             if (currentView === 'roadmap') {
-                roadmap.classList.remove('hidden');
-                exam.classList.add('hidden');
+                roadmapView.classList.remove('hidden');
+                examView.classList.add('hidden');
             } else {
-                roadmap.classList.add('hidden');
-                exam.classList.remove('hidden');
+                roadmapView.classList.add('hidden');
+                examView.classList.remove('hidden');
                 renderExamContent();
             }
-            applyBlurState();
+            applyFocusState();
         }
 
         function renderExamContent() {
@@ -772,7 +809,7 @@
                 renderQuestions();
             } else if (examProgress === 'results') {
                 resultsCont.classList.remove('hidden');
-                submitExam(false); // Render the existing results
+                submitExam(false); 
             }
         }
 
@@ -857,7 +894,7 @@
         window.onload = () => {
             loadState();
             changeLanguage(currentLang);
-            applyBlurState();
+            applyFocusState();
         };
     </script>
 </body>
