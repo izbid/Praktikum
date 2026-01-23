@@ -587,6 +587,9 @@
 
         // --- Core Functions ---
 
+        /**
+         * Saves state to sessionStorage so it persists through refresh but resets in new tabs/windows.
+         */
         function saveState() {
             const state = {
                 currentLang,
@@ -597,11 +600,14 @@
                 examProgress,
                 userAnswers
             };
-            localStorage.setItem('it_roadmap_state', JSON.stringify(state));
+            sessionStorage.setItem('it_roadmap_state', JSON.stringify(state));
         }
 
+        /**
+         * Loads state from sessionStorage.
+         */
         function loadState() {
-            const saved = localStorage.getItem('it_roadmap_state');
+            const saved = sessionStorage.getItem('it_roadmap_state');
             if (saved) {
                 const state = JSON.parse(saved);
                 currentLang = state.currentLang || 'en';
