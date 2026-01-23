@@ -167,8 +167,30 @@
                                         <h4 class="font-bold text-lg text-green-800" id="day1-h4">Day 1: Physical Infrastructure</h4>
                                         <p class="text-slate-500 text-xs" id="day1-sub">Task Complete: PC Assembly & Components.</p>
                                     </div>
-                                    <div class="p-4 text-xs text-slate-600" id="day1-content">
-                                        Understanding the CPU, RAM, PSU, and Motherboard connections.
+                                    <div class="divide-y divide-slate-50">
+                                        <details class="group">
+                                            <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 transition-colors">
+                                                <span class="text-sm font-semibold text-slate-700 flex items-center gap-3">
+                                                    <i class="fas fa-chevron-right text-[10px] text-slate-400 transition-transform"></i>
+                                                    <span id="d1-t1-title">Session 1: Visual Learning (German)</span>
+                                                </span>
+                                            </summary>
+                                            <div class="px-11 pb-6 pt-2 space-y-3 text-xs text-slate-600" id="d1-t1-steps">
+                                                <p>Learn how hardware works in this fun video:</p>
+                                                <a href="https://www.youtube.com/watch?v=R9E-Ere99f0" target="_blank" class="text-blue-600 font-bold underline">Wie funktioniert ein Computer? (Simpleclub)</a>
+                                            </div>
+                                        </details>
+                                        <details class="group">
+                                            <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 transition-colors">
+                                                <span class="text-sm font-semibold text-slate-700 flex items-center gap-3">
+                                                    <i class="fas fa-chevron-right text-[10px] text-slate-400 transition-transform"></i>
+                                                    <span id="d1-t2-title">Session 2: Practical PC Building</span>
+                                                </span>
+                                            </summary>
+                                            <div class="px-11 pb-6 pt-2 text-xs text-slate-600" id="d1-t2-steps">
+                                                Hands-on: Assembling CPU, RAM, and storage on the motherboard.
+                                            </div>
+                                        </details>
                                     </div>
                                 </div>
                             </div>
@@ -184,8 +206,30 @@
                                         <h4 class="font-bold text-lg text-blue-800" id="day2-h4">Day 2: OS Installation</h4>
                                         <p class="text-slate-500 text-xs" id="day2-sub">Software Focus: Environment Setup.</p>
                                     </div>
-                                    <div class="p-4 text-xs text-slate-600" id="day2-content">
-                                        Media Creation Tool, BIOS Boot Priority, and Windows 11 installation.
+                                    <div class="divide-y divide-slate-50">
+                                        <details class="group">
+                                            <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 transition-colors">
+                                                <span class="text-sm font-semibold text-slate-700 flex items-center gap-3">
+                                                    <i class="fas fa-chevron-right text-[10px] text-slate-400 transition-transform"></i>
+                                                    <span id="d2-t1-title">Session 1: OS Concepts (German)</span>
+                                                </span>
+                                            </summary>
+                                            <div class="px-11 pb-6 pt-2 space-y-3 text-xs text-slate-600" id="d2-t1-steps">
+                                                <p>Quick guide to what an OS actually does:</p>
+                                                <a href="https://www.youtube.com/watch?v=M5K3t99SInA" target="_blank" class="text-blue-600 font-bold underline">Was ist ein Betriebssystem? (Wissen2Go)</a>
+                                            </div>
+                                        </details>
+                                        <details class="group">
+                                            <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 transition-colors">
+                                                <span class="text-sm font-semibold text-slate-700 flex items-center gap-3">
+                                                    <i class="fas fa-chevron-right text-[10px] text-slate-400 transition-transform"></i>
+                                                    <span id="d2-t2-title">Session 2: Hands-on Installation</span>
+                                                </span>
+                                            </summary>
+                                            <div class="px-11 pb-6 pt-2 text-xs text-slate-600" id="d2-t2-steps">
+                                                Installing Windows 11 via bootable USB and setting up user profiles.
+                                            </div>
+                                        </details>
                                     </div>
                                 </div>
                             </div>
@@ -216,7 +260,7 @@
                                             </ol>
                                         </div>
                                     </details>
-                                    <details class="group border-b border-slate-50">
+                                    <details class="group">
                                         <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 transition-colors">
                                             <span class="text-sm font-semibold text-slate-700 flex items-center gap-3">
                                                 <i class="fas fa-chevron-right text-[10px] text-slate-400 transition-transform"></i>
@@ -418,7 +462,15 @@
                 retakeBtn: "Restart Exam",
                 explTitle: "Review of Answers:",
                 focusUnlock: "Unlock Focus",
-                focusLock: "Restore Focus"
+                focusLock: "Restore Focus",
+                d1_t1: "Session 1: Visual Learning (German)",
+                d1_t1_desc: "<p>Learn how hardware works in this fun video:</p><a href='https://www.youtube.com/watch?v=R9E-Ere99f0' target='_blank' class='text-blue-600 font-bold underline'>Wie funktioniert ein Computer? (Simpleclub)</a>",
+                d1_t2: "Session 2: Practical PC Building",
+                d1_t2_desc: "Hands-on: Assembling CPU, RAM, and storage on the motherboard.",
+                d2_t1: "Session 1: OS Concepts (German)",
+                d2_t1_desc: "<p>Quick guide to what an OS actually does:</p><a href='https://www.youtube.com/watch?v=M5K3t99SInA' target='_blank' class='text-blue-600 font-bold underline'>Was ist ein Betriebssystem? (Wissen2Go)</a>",
+                d2_t2: "Session 2: Hands-on Installation",
+                d2_t2_desc: "Installing Windows 11 via bootable USB and setting up user profiles."
             },
             de: {
                 review: [
@@ -473,7 +525,15 @@
                 retakeBtn: "Prüfung wiederholen",
                 explTitle: "Überprüfung deiner Antworten:",
                 focusUnlock: "Fokus lösen",
-                focusLock: "Fokus setzen"
+                focusLock: "Fokus setzen",
+                d1_t1: "Session 1: Visuelles Lernen (Deutsch)",
+                d1_t1_desc: "<p>Lerne Hardware in diesem coolen Video kennen:</p><a href='https://www.youtube.com/watch?v=R9E-Ere99f0' target='_blank' class='text-blue-600 font-bold underline'>Wie funktioniert ein Computer? (Simpleclub)</a>",
+                d1_t2: "Session 2: Praktischer PC-Bau",
+                d1_t2_desc: "Hands-on: Einbau von CPU, RAM und Speicher auf dem Mainboard.",
+                d2_t1: "Session 1: OS-Konzepte (Deutsch)",
+                d2_t1_desc: "<p>Kurze Erklärung, was ein Betriebssystem eigentlich macht:</p><a href='https://www.youtube.com/watch?v=M5K3t99SInA' target='_blank' class='text-blue-600 font-bold underline'>Was ist ein Betriebssystem? (Wissen2Go)</a>",
+                d2_t2: "Session 2: Praktische Installation",
+                d2_t2_desc: "Installation von Windows 11 via bootfähigem USB-Stick."
             }
         };
 
@@ -485,9 +545,13 @@
                 intro: "Congratulations on reaching the final stage. Below is your roadmap. Your mentor has focused the view on Day 5, but can unlock the full history for your review.",
                 tasks: "Daily Tasks & Steps",
                 d1_h4: "Day 1: Hardware",
+                d1_sub: "Task Complete: PC Assembly & Components.",
                 d2_h4: "Day 2: OS Installation",
+                d2_sub: "Software Focus: Environment Setup.",
                 d3_h4: "Day 3: Networking",
+                d3_h4_sub: "Infrastructure Focus: Connectivity.",
                 d4_h4: "Day 4: AI in Practice",
+                d4_sub: "Machine Learning Intro.",
                 d5_h4: "Day 5: Review & Final Exam",
                 d5_sub: "Ready for the challenge? Complete the exam to validate your skills.",
                 d5_btn: "Start Final Exam",
@@ -504,9 +568,13 @@
                 intro: "Herzlichen Glückwunsch zum Erreichen der Endphase. Unten findest du deine Roadmap. Dein Mentor hat den Fokus auf Tag 5 gelegt, kann aber den gesamten Verlauf zur Durchsicht freischalten.",
                 tasks: "Tägliche Aufgaben & Schritte",
                 d1_h4: "Tag 1: Hardware",
+                d1_sub: "Aufgabe erledigt: PC-Montage & Komponenten.",
                 d2_h4: "Tag 2: OS Installation",
+                d2_sub: "Software-Fokus: Einrichtung der Umgebung.",
                 d3_h4: "Tag 3: Netzwerke",
+                d3_h4_sub: "Infrastruktur-Fokus: Konnektivität.",
                 d4_h4: "Tag 4: KI in der Praxis",
+                d4_sub: "Machine Learning Einführung.",
                 d5_h4: "Tag 5: Review & Prüfung",
                 d5_sub: "Bereit für die Herausforderung? Schließe die Prüfung ab, um dein Wissen zu bestätigen.",
                 d5_btn: "Abschlussprüfung starten",
@@ -549,6 +617,7 @@
         function changeLanguage(lang) {
             currentLang = lang;
             const t = text[lang];
+            const ex = examData[lang];
             const sideList = document.getElementById('authorized-list');
             
             safeSetText('nav-title', t.nav);
@@ -556,10 +625,25 @@
             safeSetText('welcome-hello', t.hello);
             safeSetText('welcome-p', t.intro);
             safeSetText('roadmap-h2', t.tasks);
+            
             safeSetText('day1-h4', t.d1_h4);
+            safeSetText('day1-sub', t.d1_sub);
+            safeSetText('d1-t1-title', ex.d1_t1);
+            safeSetHTML('d1-t1-steps', ex.d1_t1_desc);
+            safeSetText('d1-t2-title', ex.d1_t2);
+            safeSetHTML('d1-t2-steps', ex.d1_t2_desc);
+
             safeSetText('day2-h4', t.d2_h4);
+            safeSetText('day2-sub', t.d2_sub);
+            safeSetText('d2-t1-title', ex.d2_t1);
+            safeSetHTML('d2-t1-steps', ex.d2_t1_desc);
+            safeSetText('d2-t2-title', ex.d2_t2);
+            safeSetHTML('d2-t2-steps', ex.d2_t2_desc);
+
             safeSetText('day3-h4', t.d3_h4);
+            safeSetText('day3-sub', t.d3_h4_sub);
             safeSetText('day4-h4', t.d4_h4);
+            safeSetText('day4-sub', t.d4_sub);
             safeSetText('day5-h4', t.d5_h4);
             safeSetText('day5-sub', t.d5_sub);
             safeSetText('day5-btn', t.d5_btn);
