@@ -26,6 +26,13 @@
             opacity: 0.5;
             user-select: none;
         }
+        /* Global Focus Blur */
+        .focus-blur {
+            filter: blur(12px) grayscale(50%);
+            pointer-events: none;
+            opacity: 0.4;
+            transition: all 0.6s ease;
+        }
         /* Completed Day Styling */
         .completed-day-card {
             filter: blur(1.5px) grayscale(20%);
@@ -96,6 +103,11 @@
             </div>
             
             <div class="flex items-center gap-4">
+                <!-- Toggle Focus Blur (Visible after Auth) -->
+                <button id="toggle-blur-btn" onclick="toggleBlurEffect()" class="hidden bg-indigo-100 text-indigo-700 text-[10px] px-4 py-2 rounded-full hover:bg-indigo-200 transition-all font-bold uppercase border border-indigo-200">
+                    <i class="fas fa-eye-slash mr-1"></i> <span id="blur-toggle-text">Unlock Focus</span>
+                </button>
+
                 <!-- Language Toggle -->
                 <div class="bg-slate-100 p-1 rounded-full flex gap-1 border border-slate-200">
                     <button onclick="changeLanguage('en')" id="lang-en" class="text-[10px] font-bold px-3 py-1 rounded-full transition-all lang-active">EN</button>
@@ -135,166 +147,63 @@
                     </h2>
 
                     <div id="roadmap">
-                        <!-- Day 1 (Done) -->
-                        <div class="relative pl-8 pb-10 step-item day-container" id="day-1">
-                            <div class="step-line absolute left-[11px] top-6 bottom-0 w-0.5 bg-green-200"></div>
-                            <div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-green-500 z-10 flex items-center justify-center shadow-lg shadow-green-200">
-                                <i class="fas fa-check text-white text-[10px]"></i>
+                        <!-- PREVIOUS DAYS (Blur targets) -->
+                        <div id="blur-container" class="focus-blur space-y-2">
+                            <!-- Day 1 (Done) -->
+                            <div class="relative pl-8 pb-10 step-item day-container" id="day-1">
+                                <div class="step-line absolute left-[11px] top-6 bottom-0 w-0.5 bg-green-200"></div>
+                                <div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-green-500 z-10 flex items-center justify-center shadow-lg shadow-green-200">
+                                    <i class="fas fa-check text-white text-[10px]"></i>
+                                </div>
+                                <div class="bg-white p-6 rounded-2xl border border-green-100 shadow-sm completed-day-card" id="card-1">
+                                    <h4 class="font-bold text-lg text-green-800 mb-2" id="day1-h4">Day 1: Physical Infrastructure</h4>
+                                    <p class="text-sm text-slate-500 italic" id="day1-p">Task Complete: PC Assembly & Component Identification.</p>
+                                </div>
                             </div>
-                            <div class="bg-white p-6 rounded-2xl border border-green-100 shadow-sm completed-day-card" id="card-1">
-                                <h4 class="font-bold text-lg text-green-800 mb-2" id="day1-h4">Day 1: Physical Infrastructure</h4>
-                                <p class="text-sm text-slate-500 italic" id="day1-p">Task Complete: PC Assembly & Component Identification.</p>
-                            </div>
-                        </div>
 
-                        <!-- Day 2 (Done) -->
-                        <div class="relative pl-8 pb-10 step-item day-container" id="day-2">
-                            <div class="step-line absolute left-[11px] top-6 bottom-0 w-0.5 bg-green-200" id="line-2"></div>
-                            <div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-green-500 z-10 flex items-center justify-center shadow-lg shadow-green-200" id="icon-2">
-                                <i class="fas fa-check text-white text-[10px]"></i>
+                            <!-- Day 2 (Done) -->
+                            <div class="relative pl-8 pb-10 step-item day-container" id="day-2">
+                                <div class="step-line absolute left-[11px] top-6 bottom-0 w-0.5 bg-green-200" id="line-2"></div>
+                                <div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-green-500 z-10 flex items-center justify-center shadow-lg shadow-green-200" id="icon-2">
+                                    <i class="fas fa-check text-white text-[10px]"></i>
+                                </div>
+                                <div class="bg-white p-6 rounded-2xl border border-blue-100 shadow-sm completed-day-card" id="content-2">
+                                    <h4 class="font-bold text-lg text-blue-800 mb-2" id="day2-h4">Day 2: OS Installation</h4>
+                                    <p class="text-sm text-slate-500 italic" id="day2-sub">Software Focus: Setting up the environment.</p>
+                                </div>
                             </div>
-                            <div class="bg-white p-2 rounded-2xl border border-blue-100 shadow-sm relative overflow-hidden completed-day-card" id="content-2">
-                                <div class="p-4 border-b border-slate-50">
-                                    <h4 class="font-bold text-lg text-blue-800" id="day2-h4">Day 2: OS Installation</h4>
-                                    <p class="text-slate-500 text-xs" id="day2-sub">Software Focus: Setting up the environment.</p>
+
+                            <!-- Day 3 (Done) -->
+                            <div class="relative pl-8 pb-10 step-item day-container" id="day-3">
+                                <div class="step-line absolute left-[11px] top-6 bottom-0 w-0.5 bg-green-200" id="line-3"></div>
+                                <div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-green-500 z-10 flex items-center justify-center shadow-lg shadow-green-200" id="icon-3">
+                                    <i class="fas fa-check text-white text-[10px]"></i>
+                                </div>
+                                <div class="bg-white p-6 rounded-2xl border border-blue-100 shadow-sm completed-day-card" id="content-3">
+                                    <h4 class="font-bold text-lg text-blue-800 mb-2" id="day3-h4">Day 3: Basics of Networking</h4>
+                                    <p class="text-sm text-slate-500 italic" id="day3-sub">Infrastructure Focus: Connecting the world.</p>
+                                </div>
+                            </div>
+
+                            <!-- Day 4 (Done) -->
+                            <div class="relative pl-8 pb-10 step-item day-container" id="day-4">
+                                <div class="step-line absolute left-[11px] top-6 bottom-0 w-0.5 bg-green-200" id="line-4"></div>
+                                <div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-green-500 z-10 flex items-center justify-center shadow-lg shadow-green-200" id="icon-4">
+                                    <i class="fas fa-check text-white text-[10px]"></i>
+                                </div>
+                                <div class="bg-white p-6 rounded-2xl border border-purple-100 shadow-sm completed-day-card" id="content-4">
+                                    <h4 class="font-bold text-lg text-purple-800 mb-2" id="day4-h4">Day 4: AI in Practice</h4>
+                                    <p class="text-sm text-slate-500 italic" id="day4-sub">Machine Learning and Simulations.</p>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Day 3 (Active) -->
-                        <div class="relative pl-8 pb-10 step-item day-container" id="day-3">
-                            <div class="step-line absolute left-[11px] top-6 bottom-0 w-0.5 bg-slate-200" id="line-3"></div>
-                            <div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-blue-500 z-10 flex items-center justify-center shadow-lg shadow-blue-200" id="icon-3">
-                                <div class="w-2 h-2 bg-white rounded-full"></div>
-                            </div>
-                            <div class="bg-white p-2 rounded-2xl border border-blue-100 shadow-md relative overflow-hidden" id="content-3">
-                                <div class="absolute inset-0 bg-slate-50/40 backdrop-blur-[2px] z-20 flex flex-col items-center justify-center" id="lock-overlay-3" style="display: none;">
-                                    <i class="fas fa-lock text-slate-400 mb-2"></i>
-                                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest" id="lock-text-3">Awaiting Authorization</span>
-                                </div>
-                                <div class="p-4 border-b border-slate-50">
-                                    <h4 class="font-bold text-lg text-blue-800" id="day3-h4">Day 3: Basics of Networking</h4>
-                                    <p class="text-slate-500 text-xs" id="day3-sub">Infrastructure Focus: Connecting the world.</p>
-                                </div>
-                                
-                                <details class="group border-b border-slate-50">
-                                    <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 transition-colors">
-                                        <span class="text-sm font-semibold text-slate-700 flex items-center gap-3">
-                                            <i class="fas fa-chevron-right text-[10px] text-slate-400 transition-transform"></i>
-                                            <span id="d3-t1-title">Session 1: Visual Learning (YouTube)</span>
-                                        </span>
-                                        <span class="text-[10px] font-bold text-red-500 bg-red-50 px-2 py-1 rounded">VIDEO</span>
-                                    </summary>
-                                    <div class="px-11 pb-6 pt-2 space-y-3 text-xs text-slate-600" id="d3-t1-steps">
-                                        <p>Watch these introductory videos to understand how the internet works:</p>
-                                        <ol class="list-decimal space-y-2">
-                                            <li><a href="https://www.youtube.com/watch?v=YZ3TMkOE8LY" target="_blank" class="text-blue-600 font-bold underline">Introduction to Networking</a></li>
-                                            <li><a href="https://www.youtube.com/watch?v=tSodBEAJz9Y" target="_blank" class="text-blue-600 font-bold underline">How the Internet Works</a></li>
-                                        </ol>
-                                    </div>
-                                </details>
-
-                                <details class="group border-b border-slate-50">
-                                    <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 transition-colors">
-                                        <span class="text-sm font-semibold text-slate-700 flex items-center gap-3">
-                                            <i class="fas fa-chevron-right text-[10px] text-slate-400 transition-transform"></i>
-                                            <span id="d3-t2-title">Session 2: Interactive Simulation</span>
-                                        </span>
-                                        <span class="text-[10px] font-bold text-indigo-500 bg-indigo-50 px-2 py-1 rounded">SIM</span>
-                                    </summary>
-                                    <div class="px-11 pb-6 pt-2 space-y-3 text-xs text-slate-600" id="d3-t2-steps">
-                                        <ol class="list-decimal space-y-2">
-                                            <li>Open the <a href="https://netsim.erinn.io/" target="_blank" class="text-blue-600 font-bold underline">Netsim Simulation Tool</a>.</li>
-                                            <li>Follow the built-in tutorial to build your first virtual network.</li>
-                                            <li>Try to connect two computers and send a data packet between them.</li>
-                                        </ol>
-                                    </div>
-                                </details>
-
-                                <details class="group">
-                                    <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 transition-colors">
-                                        <span class="text-sm font-semibold text-slate-700 flex items-center gap-3">
-                                            <i class="fas fa-chevron-right text-[10px] text-slate-400 transition-transform"></i>
-                                            <span id="d3-t3-title">Session 3: Practical Reinforcement</span>
-                                        </span>
-                                        <span class="text-[10px] font-bold text-green-500 bg-green-50 px-2 py-1 rounded">PRACTICE</span>
-                                    </summary>
-                                    <div class="px-11 pb-6 pt-2 space-y-3 text-xs text-slate-600" id="d3-t3-steps">
-                                        <ol class="list-decimal space-y-2">
-                                            <li>Identify your machine's private IP address using the terminal.</li>
-                                            <li>Use the `tracert` command to see the path to a website.</li>
-                                            <li>Test your network speed and discuss the results with your mentor.</li>
-                                        </ol>
-                                    </div>
-                                </details>
-                            </div>
-                        </div>
-
-                        <!-- Day 4 (Locked) -->
-                        <div class="relative pl-8 pb-10 step-item day-container" id="day-4">
-                            <div class="step-line absolute left-[11px] top-6 bottom-0 w-0.5 bg-slate-200" id="line-4"></div>
-                            <div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-purple-500 z-10 flex items-center justify-center shadow-lg shadow-purple-200" id="icon-4">
-                                <div class="w-2 h-2 bg-white rounded-full"></div>
-                            </div>
-                            <div class="bg-white p-2 rounded-2xl border border-purple-100 shadow-sm relative overflow-hidden locked-day" id="content-4">
-                                <div class="absolute inset-0 bg-slate-50/40 backdrop-blur-[2px] z-20 flex flex-col items-center justify-center" id="lock-overlay-4">
-                                    <i class="fas fa-lock text-slate-400 mb-2"></i>
-                                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest" id="lock-text-4">Awaiting Authorization</span>
-                                </div>
-                                <div class="p-4 border-b border-slate-50">
-                                    <h4 class="font-bold text-lg text-purple-800" id="day4-h4">Day 4: AI in Practice</h4>
-                                    <p class="text-slate-500 text-xs" id="day4-sub">Machine Learning and Simulations.</p>
-                                </div>
-                                
-                                <details class="group border-b border-slate-50">
-                                    <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 transition-colors">
-                                        <span class="text-sm font-semibold text-slate-700 flex items-center gap-3">
-                                            <i class="fas fa-chevron-right text-[10px] text-slate-400 transition-transform"></i>
-                                            <span id="d4-t1-title">Session 1: Visual Learning (YouTube)</span>
-                                        </span>
-                                        <span class="text-[10px] font-bold text-red-500 bg-red-50 px-2 py-1 rounded">VIDEO</span>
-                                    </summary>
-                                    <div class="px-11 pb-6 pt-2 space-y-3 text-xs text-slate-600" id="d4-t1-steps">
-                                        <p>Watch these videos to understand how AI learns and functions:</p>
-                                        <ol class="list-decimal space-y-2">
-                                            <li><a href="https://www.youtube.com/watch?v=ttIOdAdQaUE" target="_blank" class="text-blue-600 font-bold underline">What is AI? (Kid's Intro)</a></li>
-                                            <li><a href="https://www.youtube.com/watch?v=_80pKGuyKWc" target="_blank" class="text-blue-600 font-bold underline">What is Artificial Intelligence? (Overview)</a></li>
-                                            <li><a href="https://www.youtube.com/watch?v=ad79nYk2keg" target="_blank" class="text-blue-600 font-bold underline">How AI Works (Step-by-Step)</a></li>
-                                            <li><a href="https://www.youtube.com/watch?v=sDt5bTQBJis" target="_blank" class="text-blue-600 font-bold underline">AI in 5 Minutes (Recap)</a></li>
-                                            <li><a href="https://www.youtube.com/watch?v=osCuFoSMzZk" target="_blank" class="text-blue-600 font-bold underline">Intro to Machine Learning</a></li>
-                                        </ol>
-                                    </div>
-                                </details>
-
-                                <details class="group">
-                                    <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 transition-colors">
-                                        <span class="text-sm font-semibold text-slate-700 flex items-center gap-3">
-                                            <i class="fas fa-chevron-right text-[10px] text-slate-400 transition-transform"></i>
-                                            <span id="d4-t2-title">Session 2: AI Simulation Tools</span>
-                                        </span>
-                                        <span class="text-[10px] font-bold text-indigo-500 bg-indigo-50 px-2 py-1 rounded">SIM</span>
-                                    </summary>
-                                    <div class="px-11 pb-6 pt-2 space-y-3 text-xs text-slate-600" id="d4-t2-steps">
-                                        <ol class="list-decimal space-y-2">
-                                            <li>Open <a href="https://machinelearningforkids.co.uk/" target="_blank" class="text-blue-600 font-bold underline">ML for Kids</a>.</li>
-                                            <li>Choose a project template (e.g., 'Pac-Man' or 'Titanic').</li>
-                                            <li>Train your first Machine Learning model with your own data!</li>
-                                        </ol>
-                                    </div>
-                                </details>
-                            </div>
-                        </div>
-
-                        <!-- Day 5 (Locked) -->
+                        <!-- Day 5 (Active at start) -->
                         <div class="relative pl-8 pb-6 step-item day-container" id="day-5">
                             <div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-orange-500 z-10 flex items-center justify-center shadow-lg shadow-orange-200" id="icon-5">
                                 <i class="fas fa-star text-white text-[10px]"></i>
                             </div>
-                            <div class="bg-white p-2 rounded-2xl border border-orange-100 shadow-sm relative overflow-hidden locked-day" id="content-5">
-                                <div class="absolute inset-0 bg-slate-50/40 backdrop-blur-[2px] z-20 flex flex-col items-center justify-center" id="lock-overlay-5">
-                                    <i class="fas fa-lock text-slate-400 mb-2"></i>
-                                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest" id="lock-text-5">Awaiting Authorization</span>
-                                </div>
+                            <div class="bg-white p-2 rounded-2xl border border-orange-100 shadow-md relative overflow-hidden" id="content-5">
                                 <div class="p-6">
                                     <h4 class="font-bold text-lg text-orange-800" id="day5-h4">Day 5: Deployment & Review</h4>
                                     <p class="text-sm text-slate-600 mt-2 mb-6" id="day5-sub">It's time to test your knowledge! Complete the final exam to finish your roadmap.</p>
@@ -316,26 +225,7 @@
                             <span id="side-mentor-title">Mentor Status</span>
                         </h3>
                         <div class="space-y-4" id="authorized-list">
-                            <div class="flex items-center justify-between text-xs">
-                                <span class="text-slate-400" id="side-d1-text">Day 1: Hardware</span>
-                                <span class="text-green-400 font-bold" id="side-d1-status">✓ DONE</span>
-                            </div>
-                            <div class="flex items-center justify-between text-xs" id="side-2">
-                                <span class="text-slate-400 italic" id="side-d2-text">Day 2: OS Install</span>
-                                <span class="text-green-400 font-bold" id="side-d2-status">✓ DONE</span>
-                            </div>
-                            <div class="flex items-center justify-between text-xs" id="side-3">
-                                <span class="text-slate-200" id="side-d3-text">Day 3: Networking</span>
-                                <span class="text-blue-400 font-bold" id="side-d3-status">● ACTIVE</span>
-                            </div>
-                            <div class="flex items-center justify-between text-xs opacity-40" id="side-4">
-                                <span class="text-slate-400 italic" id="side-d4-text">Day 4: AI Intro</span>
-                                <i class="fas fa-lock"></i>
-                            </div>
-                            <div class="flex items-center justify-between text-xs opacity-40" id="side-5">
-                                <span class="text-slate-400 italic" id="side-d5-text">Day 5: Review</span>
-                                <i class="fas fa-lock"></i>
-                            </div>
+                            <!-- Populated by script -->
                         </div>
                     </div>
 
@@ -357,7 +247,7 @@
             </div>
         </div>
 
-        <!-- EXAM VIEW (Hidden by default) -->
+        <!-- EXAM VIEW -->
         <div id="exam-view" class="hidden">
             <button onclick="hideExam()" class="mb-6 text-indigo-600 font-bold flex items-center gap-2 hover:translate-x-[-4px] transition-transform">
                 <i class="fas fa-arrow-left"></i> <span id="exam-back">Back to Roadmap</span>
@@ -400,13 +290,15 @@
     <div id="toast">Mentor Authorized! Next day unlocked.</div>
 
     <footer class="max-w-5xl mx-auto px-6 py-12 border-t border-slate-200 mt-12 text-center text-slate-400 text-sm">
-        Planet| IT Praktikum 2026
+        Planet | IT Praktikum 2026
     </footer>
 
     <script>
-        let unlockedDay = 3; 
+        let unlockedDay = 5; // Starting at Day 5
         let currentLang = 'en';
+        let isFocusMode = true; // Starting with blur on prev days
         const mentorSecret = "admin";
+        let isAuthorized = false;
 
         const examData = {
             en: {
@@ -417,77 +309,89 @@
                     { day: 4, title: "AI & ML", text: "You investigated how computers learn from data (Machine Learning), the importance of labeling training data, and the role of ethics and bias." }
                 ],
                 questions: [
-                    // Day 1
-                    { id: 1, cat: "Hardware", q: "Which component is often called the 'brain' of the computer?", options: ["RAM", "SSD", "CPU", "GPU"], correct: 2, expl: "The CPU (Central Processing Unit) performs all calculations." },
-                    { id: 2, cat: "Hardware", q: "Where is data stored permanently, even when power is off?", options: ["RAM", "SSD/HDD", "CPU cache", "PSU"], correct: 1, expl: "RAM is volatile; storage drives like SSDs keep data permanently." },
-                    { id: 3, cat: "Hardware", q: "What is the purpose of the Motherboard?", options: ["Provide power", "Connect all parts", "Render 3D graphics", "Cool the system"], correct: 1, expl: "The motherboard is the backbone that connects all components." },
-                    { id: 4, cat: "Hardware", q: "Which component is responsible for short-term memory?", options: ["RAM", "Hard Drive", "BIOS", "Monitor"], correct: 0, expl: "RAM holds active data for quick access by the CPU." },
-                    { id: 5, cat: "Hardware", q: "What does the PSU stand for?", options: ["Primary Storage Unit", "Personal Screen Utility", "Power Supply Unit", "Protected Software Upload"], correct: 2, expl: "The PSU converts wall power into power the PC can use." },
-                    // Day 2
-                    { id: 6, cat: "OS", q: "What tool is used to create a Windows installation USB?", options: ["Notepad", "BIOS", "Media Creation Tool", "ipconfig"], correct: 2, expl: "Microsoft's Media Creation Tool prepares the USB for booting." },
-                    { id: 7, cat: "OS", q: "Where do you change the order of devices the computer tries to boot from?", options: ["Windows Settings", "Task Manager", "BIOS/UEFI", "Control Panel"], correct: 2, expl: "Boot order is set at the firmware level (BIOS)." },
-                    { id: 8, cat: "OS", q: "Which key is commonly used to enter the BIOS on startup?", options: ["Enter", "F2 or Del", "Shift", "Escape"], correct: 1, expl: "F2 and Delete are the most common BIOS entry keys." },
-                    { id: 9, cat: "OS", q: "A 'clean install' typically involves doing what to a hard drive?", options: ["Formatting/Deleting partitions", "Dusting it", "Moving files to Cloud", "Changing the name"], correct: 0, expl: "A clean install wipes existing data to start fresh." },
-                    { id: 10, cat: "OS", q: "Why is a 64-bit OS better than a 32-bit OS?", options: ["It is smaller", "It can handle more RAM", "It doesn't need power", "It is free"], correct: 1, expl: "64-bit systems can address much larger amounts of memory." },
-                    // Day 3
-                    { id: 11, cat: "Networking", q: "What does DNS stand for?", options: ["Data Network System", "Digital Name Server", "Domain Name System", "Drive Network Source"], correct: 2, expl: "DNS translates domain names (google.com) into IP addresses." },
-                    { id: 12, cat: "Networking", q: "Which command shows the path packets take to a website?", options: ["ping", "tracert", "ipconfig", "help"], correct: 1, expl: "Traceroute (tracert) follows the hop-by-hop path across routers." },
-                    { id: 13, cat: "Networking", q: "What is the 'phonebook' of the internet?", options: ["Google Search", "The Cloud", "DNS", "The Router"], correct: 2, expl: "DNS is frequently compared to a phonebook for IPs." },
-                    { id: 14, cat: "Networking", q: "Which protocol is used to assign IP addresses automatically?", options: ["HTTP", "DHCP", "FTP", "DNS"], correct: 1, expl: "DHCP (Dynamic Host Configuration Protocol) assigns IPs to devices." },
-                    { id: 15, cat: "Networking", q: "Which IP is used inside a local home network?", options: ["Public IP", "Private IP", "Mac Address", "Global IP"], correct: 1, expl: "Private IPs (like 192.168.x.x) are used for local communication." },
-                    // Day 4
-                    { id: 16, cat: "AI", q: "In Machine Learning, what do you use to teach the computer?", options: ["Cables", "Large amounts of data", "Keyboards", "Electricity"], correct: 1, expl: "AI learns patterns from large datasets." },
-                    { id: 17, cat: "AI", q: "What is 'Bias' in an AI model?", options: ["High speed", "Unfair or skewed results", "Color settings", "A virus"], correct: 1, expl: "Bias occurs when training data is not representative or neutral." },
-                    { id: 18, cat: "AI", q: "What does the 'Confidence Score' indicate?", options: ["How fast it is", "How certain the AI is about its result", "Internet signal", "Battery life"], correct: 1, expl: "The score shows the mathematical probability the AI is right." },
-                    { id: 19, cat: "AI", q: "Why do we use 'Buckets' or 'Labels' in ML?", options: ["To store water", "To categorize data for training", "To cool the CPU", "To delete files"], correct: 1, expl: "Labels tell the AI what each piece of data represents." },
-                    { id: 20, cat: "AI", q: "What is an 'Ethical' consideration for AI?", options: ["Price", "How AI decisions affect people's lives", "Screen size", "RAM speed"], correct: 1, expl: "Ethics involves ensuring AI is fair, safe, and transparent." }
+                    // Day 1: Hardware
+                    { id: 1, cat: "Hardware", q: "Which component is often called the 'brain' of the computer?", options: ["RAM", "SSD", "CPU", "GPU"], correct: 2, expl: "The CPU performs all logical and arithmetic calculations." },
+                    { id: 2, cat: "Hardware", q: "Where is data stored permanently, even when power is off?", options: ["RAM", "SSD/HDD", "CPU cache", "PSU"], correct: 1, expl: "Non-volatile storage like SSDs keep data without power." },
+                    { id: 3, cat: "Hardware", q: "What is the purpose of the Motherboard?", options: ["Provide power", "Connect all parts", "Render 3D graphics", "Cool the system"], correct: 1, expl: "The motherboard is the PCB that connects all hardware." },
+                    { id: 4, cat: "Hardware", q: "Which component is responsible for short-term memory?", options: ["RAM", "Hard Drive", "BIOS", "Monitor"], correct: 0, expl: "RAM holds data currently being used by the CPU." },
+                    { id: 5, cat: "Hardware", q: "What does PSU stand for?", options: ["Primary Storage Unit", "Personal Screen Utility", "Power Supply Unit", "Protected Software Upload"], correct: 2, expl: "The PSU provides energy to all components." },
+                    { id: 6, cat: "Hardware", q: "Which component generates most heat and requires a cooler?", options: ["RAM", "SSD", "CPU", "Case Fan"], correct: 2, expl: "The CPU consumes the most power and generates heat during processing." },
+                    // Day 2: OS
+                    { id: 7, cat: "OS", q: "What tool is used to create a Windows installation USB?", options: ["Notepad", "BIOS", "Media Creation Tool", "ipconfig"], correct: 2, expl: "Microsoft's tool downloads the OS and flashes the USB." },
+                    { id: 8, cat: "OS", q: "Where do you change the boot device priority?", options: ["Windows Settings", "Task Manager", "BIOS/UEFI", "Control Panel"], correct: 2, expl: "Boot priority is a firmware (BIOS) level setting." },
+                    { id: 9, cat: "OS", q: "Which key is commonly used to enter the BIOS?", options: ["Enter", "F2 or Del", "Shift", "Escape"], correct: 1, expl: "F2 or Del are standard motherboard keys for BIOS." },
+                    { id: 10, cat: "OS", q: "What does a 'clean install' usually do to a drive?", options: ["Formats partition", "Dusts it", "Moves to Cloud", "Renames it"], correct: 0, expl: "A clean install wipes existing data to start fresh." },
+                    { id: 11, cat: "OS", q: "Why is 64-bit better than 32-bit?", options: ["Smaller size", "Handles more RAM", "No power needed", "It is free"], correct: 1, expl: "64-bit architectures can address 4GB+ of memory." },
+                    { id: 12, cat: "OS", q: "What is a 'Device Driver'?", options: ["Person", "Talks to Hardware", "Printer type", "Case part"], correct: 1, expl: "Drivers are the software link between OS and hardware." },
+                    // Day 3: Networking
+                    { id: 13, cat: "Networking", q: "What does DNS stand for?", options: ["Data Network System", "Digital Name Server", "Domain Name System", "Drive Network Source"], correct: 2, expl: "DNS translates names to IP addresses." },
+                    { id: 14, cat: "Networking", q: "Which command shows the packet path?", options: ["ping", "tracert", "ipconfig", "help"], correct: 1, expl: "Tracert follows data through every router hop." },
+                    { id: 15, cat: "Networking", q: "What is the 'phonebook' of the internet?", options: ["Search", "Cloud", "DNS", "Router"], correct: 2, expl: "DNS maps names to addresses like a phonebook." },
+                    { id: 16, cat: "Networking", q: "Which protocol assigns IPs automatically?", options: ["HTTP", "DHCP", "FTP", "DNS"], correct: 1, expl: "DHCP manages IP distribution on a network." },
+                    { id: 17, cat: "Networking", q: "Which IP is used locally?", options: ["Public IP", "Private IP", "Mac Address", "Global IP"], correct: 1, expl: "Private IPs are for internal local communication." },
+                    { id: 18, cat: "Networking", q: "Which cable is for wired router connection?", options: ["HDMI", "USB-C", "Ethernet", "Power"], correct: 2, expl: "Ethernet/LAN cables provide physical network links." },
+                    // Day 4: AI
+                    { id: 19, cat: "AI", q: "What teaches the computer in ML?", options: ["Cables", "Data amounts", "Keyboards", "Electricity"], correct: 1, expl: "Machine Learning relies on patterns in large data." },
+                    { id: 20, cat: "AI", q: "What is 'Bias'?", options: ["High speed", "Unfair results", "Color settings", "Virus"], correct: 1, expl: "Bias is prejudice in the AI output due to training data." },
+                    { id: 21, cat: "AI", q: "What is 'Confidence Score'?", options: ["Speed", "Certainty", "Signal", "Battery"], correct: 1, expl: "It measures the probability the AI prediction is correct." },
+                    { id: 22, cat: "AI", q: "Why use 'Buckets'?", options: ["Water", "Categorize data", "Cooling", "Deleting"], correct: 1, expl: "Labels/Buckets define classes for the AI to learn." },
+                    { id: 23, cat: "AI", q: "What is an 'Ethical' consideration?", options: ["Price", "Impact on lives", "Size", "RAM speed"], correct: 1, expl: "Ethics considers safety and fairness of AI impact." },
+                    { id: 24, cat: "AI", q: "What is 'Generative AI'?", options: ["Charger", "Creates content", "Keyboard", "Printer"], correct: 1, expl: "Generative AI produces new text or imagery." }
                 ],
-                scoreMsg: "You scored {score} out of 20.",
+                scoreMsg: "You scored {score} out of 24.",
                 passMsg: "Great job, Luis! You've mastered the roadmap.",
                 failMsg: "Good effort! Review the sections where you missed points.",
                 submitBtn: "Submit Exam",
                 retakeBtn: "Restart Exam",
-                explTitle: "Review of Answers:"
+                explTitle: "Review of Answers:",
+                focusUnlock: "Unlock Focus",
+                focusLock: "Restore Focus"
             },
             de: {
                 review: [
-                    { day: 1, title: "Hardware", text: "Du hast gelernt, dass die CPU das Gehirn ist, der RAM das Kurzzeitgedächtnis und wie Netzteil (PSU) und Speicher (SSD) über das Mainboard verbunden werden." },
-                    { day: 2, title: "OS Installation", text: "Du hast einen bootfähigen USB-Stick erstellt, im BIOS die Boot-Reihenfolge geändert und Windows 11 als Software-Basis installiert." },
-                    { day: 3, title: "Netzwerke", text: "Du hast erforscht, wie Datenpakete fließen, was der Unterschied zwischen privaten und öffentlichen IPs ist und dass DNS wie ein Telefonbuch fungiert." },
-                    { day: 4, title: "KI & ML", text: "Du hast untersucht, wie Computer aus Daten lernen (Machine Learning), wie wichtig korrekt beschriftete Trainingsdaten sind und welche Rolle Ethik spielt." }
+                    { day: 1, title: "Hardware", text: "Du hast gelernt, dass die CPU das Gehirn ist, der RAM das Kurzzeitgedächtnis und wie das Mainboard alles verbindet." },
+                    { day: 2, title: "OS Installation", text: "Du hast einen bootfähigen Stick erstellt, das BIOS konfiguriert und Windows 11 sauber installiert." },
+                    { day: 3, title: "Netzwerke", text: "Du hast erforscht, wie Datenpakete fließen, was DNS ist und wie Tracert den Weg deiner Daten visualisiert." },
+                    { day: 4, title: "KI & ML", text: "Du hast untersucht, wie KIs durch Daten lernen und wie wichtig Ethik und neutrale Trainingsdaten sind." }
                 ],
                 questions: [
-                    // Tag 1
-                    { id: 1, cat: "Hardware", q: "Welche Komponente wird oft als 'Gehirn' des Computers bezeichnet?", options: ["RAM", "SSD", "CPU", "GPU"], correct: 2, expl: "Die CPU (Prozessor) führt alle Berechnungen durch." },
-                    { id: 2, cat: "Hardware", q: "Wo werden Daten dauerhaft gespeichert, auch wenn der Strom aus ist?", options: ["RAM", "SSD/HDD", "CPU Cache", "PSU"], correct: 1, expl: "RAM ist flüchtig; Festplatten wie SSDs behalten Daten dauerhaft." },
-                    { id: 3, cat: "Hardware", q: "Was ist der Zweck des Mainboards?", options: ["Strom liefern", "Alle Teile verbinden", "3D-Grafik rendern", "Das System kühlen"], correct: 1, expl: "Das Mainboard ist das Rückgrat, das alle Komponenten verbindet." },
-                    { id: 4, cat: "Hardware", q: "Welche Komponente ist für das Kurzzeitgedächtnis zuständig?", options: ["RAM", "Festplatte", "BIOS", "Monitor"], correct: 0, expl: "RAM hält aktive Daten für den schnellen Zugriff der CPU bereit." },
-                    { id: 5, cat: "Hardware", q: "Wofür steht PSU?", options: ["Primary Storage Unit", "Personal Screen Utility", "Power Supply Unit (Netzteil)", "Protected Software Upload"], correct: 2, expl: "Das Netzteil (PSU) wandelt Strom aus der Steckdose für den PC um." },
-                    // Tag 2
-                    { id: 6, cat: "OS", q: "Welches Tool wird genutzt, um einen Windows-Installations-Stick zu erstellen?", options: ["Editor", "BIOS", "Media Creation Tool", "ipconfig"], correct: 2, expl: "Das Media Creation Tool bereitet den USB-Stick für das Booten vor." },
-                    { id: 7, cat: "OS", q: "Wo ändert man die Reihenfolge der Geräte, von denen der PC booten soll?", options: ["Windows Einstellungen", "Task-Manager", "BIOS/UEFI", "Systemsteuerung"], correct: 2, expl: "Die Boot-Reihenfolge wird in der Firmware (BIOS) eingestellt." },
-                    { id: 8, cat: "OS", q: "Welche Taste wird oft gedrückt, um beim Start das BIOS aufzurufen?", options: ["Enter", "F2 oder Entf", "Shift", "Escape"], correct: 1, expl: "F2 und Entf sind die gängigsten Tasten für den BIOS-Zugriff." },
-                    { id: 9, cat: "OS", q: "Was bedeutet eine 'Neuinstallation' für eine Festplatte meistens?", options: ["Formatieren/Löschen von Partitionen", "Abstauben", "Dateien in die Cloud schieben", "Den Namen ändern"], correct: 0, expl: "Eine Neuinstallation löscht vorhandene Daten für einen Neuanfang." },
-                    { id: 10, cat: "OS", q: "Warum ist ein 64-Bit OS besser als ein 32-Bit OS?", options: ["Es ist kleiner", "Es kann mehr RAM nutzen", "Es braucht keinen Strom", "Es ist kostenlos"], correct: 1, expl: "64-Bit Systeme können viel größere Mengen an Arbeitsspeicher verwalten." },
-                    // Tag 3
-                    { id: 11, cat: "Networking", q: "Wofür steht DNS?", options: ["Data Network System", "Digital Name Server", "Domain Name System", "Drive Network Source"], correct: 2, expl: "DNS übersetzt Domain-Namen (google.com) in IP-Adressen." },
-                    { id: 12, cat: "Networking", q: "Welcher Befehl zeigt den Weg von Datenpaketen zu einer Website?", options: ["ping", "tracert", "ipconfig", "help"], correct: 1, expl: "Traceroute (tracert) verfolgt den Weg über verschiedene Router." },
-                    { id: 13, cat: "Networking", q: "Was ist das 'Telefonbuch' des Internets?", options: ["Google Suche", "Die Cloud", "DNS", "Der Router"], correct: 2, expl: "DNS wird oft mit einem Telefonbuch für IPs verglichen." },
-                    { id: 14, cat: "Networking", q: "Welches Protokoll weist IP-Adressen automatisch zu?", options: ["HTTP", "DHCP", "FTP", "DNS"], correct: 1, expl: "DHCP weist Geräten automatisch IPs zu." },
-                    { id: 15, cat: "Networking", q: "Welche IP wird innerhalb eines lokalen Heimnetzwerks genutzt?", options: ["Öffentliche IP", "Private IP", "Mac-Adresse", "Globale IP"], correct: 1, expl: "Private IPs (wie 192.168.x.x) werden lokal genutzt." },
-                    // Tag 4
-                    { id: 16, cat: "AI", q: "Was nutzt man beim Machine Learning, um dem Computer etwas beizubringen?", options: ["Kabel", "Große Mengen an Daten", "Tastaturen", "Elektrizität"], correct: 1, expl: "KI lernt Muster aus großen Datensätzen." },
-                    { id: 17, cat: "AI", q: "Was ist 'Bias' in einem KI-Modell?", options: ["Hohe Geschwindigkeit", "Voreingenommene Ergebnisse", "Farbeinstellungen", "Ein Virus"], correct: 1, expl: "Bias entsteht, wenn Trainingsdaten nicht neutral oder repräsentativ sind." },
-                    { id: 18, cat: "AI", q: "Was zeigt der 'Confidence Score' an?", options: ["Geschwindigkeit", "Wie sicher sich die KI beim Ergebnis ist", "Internet-Signal", "Akkulaufzeit"], correct: 1, expl: "Der Score zeigt die Wahrscheinlichkeit, dass die KI richtig liegt." },
-                    { id: 19, cat: "AI", q: "Warum nutzen wir 'Buckets' oder 'Labels' in ML?", options: ["Zum Wasserspeichern", "Um Daten für das Training zu kategorisieren", "Um die CPU zu kühlen", "Um Dateien zu löschen"], correct: 1, expl: "Labels sagen der KI, was die einzelnen Daten darstellen." },
-                    { id: 20, cat: "AI", q: "Was ist ein 'ethischer' Aspekt bei KI?", options: ["Preis", "Wie KI-Entscheidungen das Leben beeinflussen", "Bildschirmgröße", "RAM-Geschwindigkeit"], correct: 1, expl: "Ethik befasst sich damit, dass KI fair, sicher und transparent ist." }
+                    // Tag 1: Hardware
+                    { id: 1, cat: "Hardware", q: "Welche Komponente wird oft als 'Gehirn' des Computers bezeichnet?", options: ["RAM", "SSD", "CPU", "GPU"], correct: 2, expl: "Die CPU übernimmt die gesamte zentrale Logik." },
+                    { id: 2, cat: "Hardware", q: "Wo werden Daten dauerhaft gespeichert?", options: ["RAM", "SSD/HDD", "CPU", "PSU"], correct: 1, expl: "Festplatten speichern Daten persistent." },
+                    { id: 3, cat: "Hardware", q: "Was macht das Mainboard?", options: ["Strom liefern", "Alles verbinden", "Grafik rendern", "Kühlen"], correct: 1, expl: "Es ist die Hauptplatine, die alle Teile verknüpft." },
+                    { id: 4, cat: "Hardware", q: "Welche Komponente ist das Kurzzeitgedächtnis?", options: ["RAM", "SSD", "BIOS", "Monitor"], correct: 0, expl: "RAM speichert temporäre Arbeitsdaten." },
+                    { id: 5, cat: "Hardware", q: "Wofür steht PSU?", options: ["Storage", "Screen", "Netzteil", "Upload"], correct: 2, expl: "Power Supply Unit versorgt den PC mit Strom." },
+                    { id: 6, cat: "Hardware", q: "Welche Komponente wird am heißesten?", options: ["RAM", "SSD", "CPU", "Lüfter"], correct: 2, expl: "Die CPU verbraucht die meiste Energie und erzeugt Abwärme." },
+                    // Tag 2: OS
+                    { id: 7, cat: "OS", q: "Welches Tool erstellt den Windows-USB-Stick?", options: ["Editor", "BIOS", "Media Creation Tool", "cmd"], correct: 2, expl: "Das Media Creation Tool von Microsoft flasht den Stick." },
+                    { id: 8, cat: "OS", q: "Wo ändert man die Boot-Priorität?", options: ["Windows", "Task Manager", "BIOS/UEFI", "cmd"], correct: 2, expl: "Die Boot-Reihenfolge liegt tief in der Firmware (BIOS)." },
+                    { id: 9, cat: "OS", q: "Welche Taste öffnet oft das BIOS?", options: ["Enter", "F2/Entf", "Shift", "Esc"], correct: 1, expl: "F2 und Entf sind die Standard-Hotkeys." },
+                    { id: 10, cat: "OS", q: "Was macht eine Neuinstallation?", options: ["Partition löschen", "Abstauben", "Cloud-Backup", "Umbenennen"], correct: 0, expl: "Es löscht alte Daten für ein sauberes System." },
+                    { id: 11, cat: "OS", q: "Warum 64-Bit?", options: ["Kleiner", "Mehr RAM nutzbar", "Kein Strom", "Kostenlos"], correct: 1, expl: "Nur 64-Bit Systeme nutzen mehr als 4GB Arbeitsspeicher effektiv." },
+                    { id: 12, cat: "OS", q: "Was ist ein Treiber?", options: ["Mensch", "Verbindung zur Hardware", "Drucker", "Gehäuse"], correct: 1, expl: "Treiber steuern die Hardware via Software." },
+                    // Tag 3: Networking
+                    { id: 13, cat: "Networking", q: "Was macht DNS?", options: ["Netzwerk-Sperre", "Namen übersetzen", "Internet löschen", "IP vergeben"], correct: 1, expl: "DNS macht aus google.com eine IP." },
+                    { id: 14, cat: "Networking", q: "Welcher Befehl zeigt den Datenweg?", options: ["ping", "tracert", "ipconfig", "help"], correct: 1, expl: "Tracert verfolgt Pakete über jeden Router." },
+                    { id: 15, cat: "Networking", q: "Das Telefonbuch des Webs?", options: ["Suche", "Cloud", "DNS", "Router"], correct: 2, expl: "DNS ist die zentrale Datenbank für Domainnamen." },
+                    { id: 16, cat: "Networking", q: "Welches Protokoll vergibt IPs?", options: ["HTTP", "DHCP", "FTP", "DNS"], correct: 1, expl: "DHCP weist Geräten IPs dynamisch zu." },
+                    { id: 17, cat: "Networking", q: "Lokale IP?", options: ["Öffentlich", "Privat", "Mac", "Global"], correct: 1, expl: "Private IPs sind für das interne Heimnetz." },
+                    { id: 18, cat: "Networking", q: "Welches Kabel verbindet Router und PC?", options: ["HDMI", "USB", "Ethernet", "Strom"], correct: 2, expl: "LAN-Kabel sorgen für stabile Verbindungen." },
+                    // Tag 4: AI
+                    { id: 19, cat: "AI", q: "Was lehrt die KI?", options: ["Kabel", "Datenmengen", "Tasten", "Strom"], correct: 1, expl: "Mustererkennung basiert auf großen Datensätzen." },
+                    { id: 20, cat: "AI", q: "Was ist Bias?", options: ["Speed", "Voreingenommenheit", "Farbe", "Virus"], correct: 1, expl: "Bias ist Einseitigkeit in der KI durch schlechte Daten." },
+                    { id: 21, cat: "AI", q: "Confidence Score?", options: ["Speed", "Sicherheit/Gewissheit", "Signal", "Akku"], correct: 1, expl: "Es zeigt, wie sicher sich die KI bei einem Ergebnis ist." },
+                    { id: 22, cat: "AI", q: "Wofür 'Buckets'?", options: ["Wasser", "Daten kategorisieren", "Kühlung", "Löschen"], correct: 1, expl: "Labels/Buckets ordnen die Trainingsdaten ein." },
+                    { id: 23, cat: "AI", q: "Ethischer Aspekt?", options: ["Preis", "Einfluss auf Leben", "Größe", "RAM Speed"], correct: 1, expl: "Ethik fragt nach der Fairness von KI-Systemen." },
+                    { id: 24, cat: "AI", q: "Generative KI?", options: ["Ladegerät", "Erstellt Inhalte", "Tastatur", "Drucker"], correct: 1, expl: "Diese KIs erschaffen neue Bilder oder Texte." }
                 ],
-                scoreMsg: "Du hast {score} von 20 Punkten erreicht.",
+                scoreMsg: "Du hast {score} von 24 Punkten erreicht.",
                 passMsg: "Gute Arbeit, Luis! Du hast die Roadmap gemeistert.",
                 failMsg: "Guter Versuch! Schau dir die Bereiche an, in denen du Punkte verloren hast.",
                 submitBtn: "Prüfung abgeben",
                 retakeBtn: "Prüfung wiederholen",
-                explTitle: "Überprüfung deiner Antworten:"
+                explTitle: "Überprüfung deiner Antworten:",
+                focusUnlock: "Fokus lösen",
+                focusLock: "Fokus setzen"
             }
         };
 
@@ -498,38 +402,18 @@
                 hello: "Welcome,",
                 intro: "Your journey into the world of IT continues. Explore each daily mission below to find the steps, guides, and interactive tools designed to help you build your skills and discover new interests.",
                 tasks: "Daily Tasks & Steps",
-                d1_h4: "Day 1: Physical Infrastructure",
-                d1_p: "Task Complete: PC Assembly & Component Identification.",
+                d1_h4: "Day 1: Hardware",
                 d2_h4: "Day 2: OS Installation",
-                d2_sub: "Software Focus: Setting up the environment.",
-                d3_h4: "Day 3: Basics of Networking",
-                d3_sub: "Infrastructure Focus: Connecting the world.",
+                d3_h4: "Day 3: Networking",
                 d4_h4: "Day 4: AI in Practice",
-                d4_sub: "Machine Learning and Simulations.",
-                d5_h4: "Day 5: Deployment & Review",
+                d5_h4: "Day 5: Review & Exam",
                 d5_sub: "It's time to test your knowledge! Complete the final exam to finish your roadmap.",
                 d5_btn: "Start Final Exam",
-                await: "Awaiting Authorization",
-                statusTitle: "Mentor Status",
-                sd1: "Day 1: Hardware",
-                sd2: "Day 2: OS Install",
-                sd3: "Day 3: Networking",
-                sd4: "Day 4: AI Intro",
-                sd5: "Day 5: Review",
                 sd_done: "✓ DONE",
                 sd_active: "● ACTIVE",
-                labTitle: "Luis's Lab",
-                toast: "Mentor Authorized! Next day unlocked.",
-                prompt: "Enter Mentor Passcode to Unlock Next Step:",
-                error: "Incorrect Passcode. Authorization Denied.",
-                progress: {
-                    1: "CURRENT PROGRESS: HARDWARE READY",
-                    2: "CURRENT PROGRESS: HARDWARE READY",
-                    3: "CURRENT PROGRESS: OS READY",
-                    4: "CURRENT PROGRESS: NETWORKING CONCEPTS MASTERED",
-                    5: "CURRENT PROGRESS: AI CONCEPTS EXPLORED",
-                    6: "CURRENT PROGRESS: WEEK COMPLETE!"
-                }
+                toast: "Mentor Authorized! Focus Toggle Unlocked.",
+                prompt: "Enter Passcode:",
+                error: "Access Denied."
             },
             de: {
                 nav: "Deine IT-Reise",
@@ -537,114 +421,76 @@
                 hello: "Willkommen,",
                 intro: "Deine Reise in die Welt der IT geht weiter. Entdecke unten jede tägliche Mission, um Schritte, Anleitungen und interaktive Tools zu finden, die dir helfen, deine Fähigkeiten auszubauen.",
                 tasks: "Tägliche Aufgaben & Schritte",
-                d1_h4: "Tag 1: Physische Infrastruktur",
-                d1_p: "Aufgabe erledigt: PC-Montage & Komponenten-Identifizierung.",
-                d2_h4: "Tag 2: Betriebssystem-Installation",
-                d2_sub: "Software-Fokus: Einrichtung der Umgebung.",
-                d3_h4: "Tag 3: Netzwerk-Grundlagen",
-                d3_sub: "Infrastruktur-Fokus: Die Welt verbinden.",
+                d1_h4: "Tag 1: Hardware",
+                d2_h4: "Tag 2: OS Installation",
+                d3_h4: "Tag 3: Netzwerke",
                 d4_h4: "Tag 4: KI in der Praxis",
-                d4_sub: "Maschinelles Lernen und Simulationen.",
-                d5_h4: "Tag 5: Veröffentlichung & Review",
+                d5_h4: "Tag 5: Review & Prüfung",
                 d5_sub: "Zeit, dein Wissen zu testen! Schließe die Abschlussprüfung ab, um deine Roadmap zu beenden.",
                 d5_btn: "Abschlussprüfung starten",
-                await: "Warten auf Freischaltung",
-                statusTitle: "Mentor Status",
-                sd1: "Tag 1: Hardware",
-                sd2: "Tag 2: OS Install",
-                sd3: "Tag 3: Netzwerke",
-                sd4: "Tag 4: KI Intro",
-                sd5: "Tag 5: Review",
                 sd_done: "✓ ERLEDIGT",
                 sd_active: "● AKTIV",
-                labTitle: "Luis' Labor",
-                toast: "Mentor autorisiert! Nächster Tag freigeschaltet.",
-                prompt: "Mentor-Passwort zum Freischalten eingeben:",
-                error: "Falsches Passwort. Zugriff verweigert.",
-                progress: {
-                    1: "AKTUELLER STAND: HARDWARE BEREIT",
-                    2: "AKTUELLER STAND: HARDWARE BEREIT",
-                    3: "AKTUELLER STAND: OS BEREIT",
-                    4: "AKTUELLER STAND: NETZWERK-KONZEPTE GEMEISTERT",
-                    5: "AKTUELLER STAND: KI-KONZEPTE ERKUNDET",
-                    6: "AKTUELLER STAND: WOCHE ABGESCHLOSSEN!"
-                }
+                toast: "Mentor autorisiert! Fokus-Umschalter freigeschaltet.",
+                prompt: "Passwort eingeben:",
+                error: "Zugriff verweigert."
             }
         };
 
-        function safeSetText(id, value) {
-            const el = document.getElementById(id);
-            if (el) el.innerText = value;
+        function toggleBlurEffect() {
+            isFocusMode = !isFocusMode;
+            const container = document.getElementById('blur-container');
+            if (isFocusMode) {
+                container.classList.add('focus-blur');
+            } else {
+                container.classList.remove('focus-blur');
+            }
+            updateToggleBtnText();
         }
 
-        function safeSetHTML(id, value) {
-            const el = document.getElementById(id);
-            if (el) el.innerHTML = value;
+        function updateToggleBtnText() {
+            const btnText = document.getElementById('blur-toggle-text');
+            const btnIcon = document.querySelector('#toggle-blur-btn i');
+            const t = examData[currentLang];
+            if (isFocusMode) {
+                btnText.innerText = t.focusUnlock;
+                btnIcon.className = "fas fa-eye-slash mr-1";
+            } else {
+                btnText.innerText = t.focusLock;
+                btnIcon.className = "fas fa-eye mr-1";
+            }
         }
 
         function changeLanguage(lang) {
             currentLang = lang;
             const t = text[lang];
+            const ex = examData[lang];
 
             safeSetText('nav-title', t.nav);
             safeSetText('mentor-btn-text', t.mentor);
-            safeSetText('progress-badge', t.progress[unlockedDay]);
             safeSetText('welcome-hello', t.hello);
             safeSetText('welcome-p', t.intro);
             safeSetText('roadmap-h2', t.tasks);
             safeSetText('day5-btn', t.d5_btn);
             safeSetText('day5-h4', t.d5_h4);
             safeSetText('day5-sub', t.d5_sub);
-
-            // Roadmap labels
             safeSetText('day1-h4', t.d1_h4);
-            safeSetText('day1-p', t.d1_p);
             safeSetText('day2-h4', t.d2_h4);
-            safeSetText('day2-sub', t.d2_sub);
             safeSetText('day3-h4', t.d3_h4);
-            safeSetText('day3-sub', t.d3_sub);
             safeSetText('day4-h4', t.d4_h4);
-            safeSetText('day4-sub', t.d4_sub);
 
-            for(let i=4; i<=5; i++) {
-                safeSetText(`lock-text-${i}`, t.await);
-            }
+            const sideList = document.getElementById('authorized-list');
+            sideList.innerHTML = `
+                <div class="flex items-center justify-between text-xs"><span class="text-slate-400">${t.d1_h4}</span><span class="text-green-400 font-bold">${t.sd_done}</span></div>
+                <div class="flex items-center justify-between text-xs"><span class="text-slate-400">${t.d2_h4}</span><span class="text-green-400 font-bold">${t.sd_done}</span></div>
+                <div class="flex items-center justify-between text-xs"><span class="text-slate-400">${t.d3_h4}</span><span class="text-green-400 font-bold">${t.sd_done}</span></div>
+                <div class="flex items-center justify-between text-xs"><span class="text-slate-400">${t.d4_h4}</span><span class="text-green-400 font-bold">${t.sd_done}</span></div>
+                <div class="flex items-center justify-between text-xs"><span class="text-slate-200 font-bold">${t.d5_h4}</span><span class="text-orange-400 font-bold">${t.sd_active}</span></div>
+            `;
 
-            safeSetText('side-mentor-title', t.statusTitle);
-            safeSetText('side-d1-text', t.sd1);
-            safeSetText('side-d1-status', t.sd_done);
-            
-            for (let i = 2; i <= 5; i++) {
-                const parentId = `side-${i}`;
-                const parentEl = document.getElementById(parentId);
-                if (parentEl) {
-                    if (unlockedDay > i) {
-                        parentEl.innerHTML = `<span class="text-slate-400 line-through">${t[`sd${i}`]}</span> <span class="text-green-400 font-bold">${t.sd_done}</span>`;
-                        parentEl.classList.remove('opacity-40');
-                    } else if (unlockedDay === i) {
-                        parentEl.innerHTML = `<span class="text-slate-200">${t[`sd${i}`]}</span> <span class="text-indigo-400 font-bold">${t.sd_active}</span>`;
-                        parentEl.classList.remove('opacity-40');
-                    } else {
-                        parentEl.innerHTML = `<span class="text-slate-400 italic">${t[`sd${i}`]}</span> <i class="fas fa-lock text-slate-600"></i>`;
-                        parentEl.classList.add('opacity-40');
-                    }
-                }
-            }
-
-            safeSetText('side-lab-title', t.labTitle);
-            safeSetText('toast', t.toast);
-
-            const btnEn = document.getElementById('lang-en');
-            const btnDe = document.getElementById('lang-de');
-            if (btnEn) btnEn.classList.toggle('lang-active', lang === 'en');
-            if (btnDe) btnDe.classList.toggle('lang-active', lang === 'de');
-
-            // Refresh Exam UI if visible
+            updateToggleBtnText();
             if (!document.getElementById('exam-view').classList.contains('hidden')) {
                 renderReview();
-                if (!document.getElementById('questions-content').classList.contains('hidden')) {
-                    renderQuestions();
-                }
+                if (!document.getElementById('questions-content').classList.contains('hidden')) renderQuestions();
             }
         }
 
@@ -652,52 +498,20 @@
             const t = text[currentLang];
             const pass = prompt(t.prompt);
             if (pass === mentorSecret) {
-                unlockNextDay();
+                isAuthorized = true;
+                document.getElementById('toggle-blur-btn').classList.remove('hidden');
+                showToast(t.toast);
             } else if (pass !== null) {
                 alert(t.error);
             }
         }
 
-        function unlockNextDay() {
-            if (unlockedDay > 5) return;
-
-            const finishedDayId = `content-${unlockedDay}`;
-            const finishedCard = document.getElementById(finishedDayId);
-            if (finishedCard) {
-                finishedCard.classList.add('completed-day-card');
-                finishedCard.classList.remove('shadow-md');
-            }
-            
-            const finishedIcon = document.getElementById(`icon-${unlockedDay}`);
-            if (finishedIcon) {
-                finishedIcon.className = "absolute left-0 top-1 w-6 h-6 rounded-full bg-green-500 z-10 flex items-center justify-center shadow-lg shadow-green-200";
-                finishedIcon.innerHTML = `<i class="fas fa-check text-white text-[10px]"></i>`;
-            }
-            
-            const finishedLine = document.getElementById(`line-${unlockedDay}`);
-            if (finishedLine) finishedLine.className = "step-line absolute left-[11px] top-6 bottom-0 w-0.5 bg-green-200";
-
-            unlockedDay++;
-            
-            const nextContent = document.getElementById(`content-${unlockedDay}`);
-            const overlay = document.getElementById(`lock-overlay-${unlockedDay}`);
-            if (nextContent) nextContent.classList.remove('locked-day');
-            if (overlay) overlay.style.display = 'none';
-
-            changeLanguage(currentLang);
-
+        function showToast(msg) {
             const toast = document.getElementById("toast");
-            if (toast) {
-                toast.className = "show";
-                setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
-            }
-            
-            const dayEl = document.getElementById(`day-${unlockedDay}`);
-            if (dayEl) dayEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            toast.innerText = msg;
+            toast.className = "show";
+            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
         }
-
-        // Exam Logic
-        let userAnswers = {};
 
         function startExam() {
             document.getElementById('roadmap-view').classList.add('hidden');
@@ -738,7 +552,6 @@
         function renderQuestions() {
             const container = document.getElementById('questions-content');
             const data = examData[currentLang];
-            
             let html = '';
             data.questions.forEach((q, qIndex) => {
                 html += `
@@ -746,26 +559,13 @@
                         <p class="font-bold text-slate-800">${qIndex + 1}. ${q.q}</p>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                             ${q.options.map((opt, oIndex) => `
-                                <button 
-                                    onclick="selectOption(${qIndex}, ${oIndex})" 
-                                    id="q${qIndex}-o${oIndex}"
-                                    class="quiz-option text-left p-4 border border-slate-200 rounded-xl text-xs transition-all ${userAnswers[qIndex] === oIndex ? 'quiz-option-selected' : ''}"
-                                >
-                                    ${opt}
-                                </button>
+                                <button onclick="selectOption(${qIndex}, ${oIndex})" id="q${qIndex}-o${oIndex}" class="quiz-option text-left p-4 border border-slate-200 rounded-xl text-xs transition-all ${userAnswers[qIndex] === oIndex ? 'quiz-option-selected' : ''}">${opt}</button>
                             `).join('')}
                         </div>
                     </div>
                 `;
             });
-
-            html += `
-                <div class="pt-10 flex justify-center">
-                    <button onclick="submitExam()" class="bg-indigo-600 text-white font-bold px-12 py-4 rounded-2xl shadow-xl shadow-indigo-100 hover:bg-indigo-700">
-                        ${data.submitBtn}
-                    </button>
-                </div>
-            `;
+            html += `<div class="pt-10 flex justify-center"><button onclick="submitExam()" class="bg-indigo-600 text-white font-bold px-12 py-4 rounded-2xl shadow-xl hover:bg-indigo-700">${data.submitBtn}</button></div>`;
             container.innerHTML = html;
         }
 
@@ -778,48 +578,27 @@
             const data = examData[currentLang];
             let score = 0;
             let reviewHtml = `<h4 class="text-xl font-bold mb-6 text-slate-800">${data.explTitle}</h4><div class="space-y-6">`;
-
             data.questions.forEach((q, idx) => {
                 const isCorrect = userAnswers[idx] === q.correct;
                 if (isCorrect) score++;
-
                 reviewHtml += `
                     <div class="p-4 rounded-xl border ${isCorrect ? 'bg-green-50 border-green-100' : 'bg-red-50 border-red-100'}">
-                        <div class="flex items-center gap-2 mb-1">
-                            <i class="fas ${isCorrect ? 'fa-check-circle text-green-600' : 'fa-times-circle text-red-600'}"></i>
-                            <p class="text-sm font-bold text-slate-800">${idx + 1}. ${q.q}</p>
-                        </div>
-                        <p class="text-xs ${isCorrect ? 'text-green-700' : 'text-red-700'} mb-2">
-                            ${isCorrect ? 'Correct!' : 'Incorrect. Your answer: ' + (q.options[userAnswers[idx]] || 'None')}
-                        </p>
+                        <div class="flex items-center gap-2 mb-1"><i class="fas ${isCorrect ? 'fa-check-circle text-green-600' : 'fa-times-circle text-red-600'}"></i><p class="text-sm font-bold text-slate-800">${idx + 1}. ${q.q}</p></div>
+                        <p class="text-xs ${isCorrect ? 'text-green-700' : 'text-red-700'} mb-2">${isCorrect ? 'Correct!' : 'Incorrect. Your answer: ' + (q.options[userAnswers[idx]] || 'None')}</p>
                         ${!isCorrect ? `<p class="text-[10px] text-slate-600 italic bg-white/50 p-2 rounded">${q.expl}</p>` : ''}
                     </div>
                 `;
             });
             reviewHtml += '</div>';
-
             const resultContainer = document.getElementById('result-content');
             resultContainer.classList.remove('hidden');
-            
             const scorePercent = (score / data.questions.length) * 100;
-            const finalMsg = scorePercent >= 70 ? data.passMsg : data.failMsg;
-
-            resultContainer.innerHTML = `
-                <div class="text-center mb-10">
-                    <div class="inline-block p-6 rounded-full ${scorePercent >= 70 ? 'bg-green-100 text-green-600' : 'bg-orange-100 text-orange-600'} mb-4">
-                        <i class="fas ${scorePercent >= 70 ? 'fa-trophy' : 'fa-redo'} text-5xl"></i>
-                    </div>
-                    <h3 class="text-3xl font-extrabold text-slate-900">${data.scoreMsg.replace('{score}', score)}</h3>
-                    <p class="text-slate-600 mt-2">${finalMsg}</p>
-                    <button onclick="startExam()" class="mt-6 text-indigo-600 font-bold hover:underline">
-                        <i class="fas fa-undo mr-1"></i> ${data.retakeBtn}
-                    </button>
-                </div>
-                ${reviewHtml}
-            `;
-
+            resultContainer.innerHTML = `<div class="text-center mb-10"><h3 class="text-3xl font-extrabold text-slate-900">${data.scoreMsg.replace('{score}', score)}</h3><p class="text-slate-600 mt-2">${scorePercent >= 70 ? data.passMsg : data.failMsg}</p><button onclick="startExam()" class="mt-6 text-indigo-600 font-bold hover:underline"><i class="fas fa-undo mr-1"></i> ${data.retakeBtn}</button></div>${reviewHtml}`;
             window.scrollTo({ top: resultContainer.offsetTop - 100, behavior: 'smooth' });
         }
+
+        function safeSetText(id, val) { const el = document.getElementById(id); if (el) el.innerText = val; }
+        function safeSetHTML(id, val) { const el = document.getElementById(id); if (el) el.innerHTML = val; }
 
         window.onload = () => changeLanguage('en');
     </script>
